@@ -1,0 +1,28 @@
+{
+  "name": "tetris",
+  "version": "1.0.0",
+  "description": "tetris game",
+  "main": "server/index.js",
+  "scripts": {
+    "start": "nodemon server/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vasyl-n/tetris.git"
+  },
+  "keywords": [
+    "tetris",
+    "game"
+  ],
+  "author": "Vasyl Nesterenko",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/vasyl-n/tetris/issues"
+  },
+  "homepage": "https://github.com/vasyl-n/tetris#readme",
+  "dependencies": {
+    "express": "^4.16.3",
+    "nodemon": "^1.17.2"
+  }
+}
