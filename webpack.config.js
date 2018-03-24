@@ -8,17 +8,18 @@ module.exports = {
         path: DIST_DIR,
         filename: 'bundle.js'
       },
-      module : {
-        rules: [
-            {
-              exclude: /(node_modules)/,
-              use: {
-                loader: 'babel-loader',
-                options: {
-                    presets: ['react', 'es2015']
-                }
-              }
+    module : {
+    rules: [
+        {
+            exclude: /(node_modules)/,
+            use: {
+            loader: 'babel-loader',
+            options: {
+                presets: ['react', 'es2015']
             }
-          ]
-      },
+            }
+        }
+        ]
+    },
+    watch: true
   };
