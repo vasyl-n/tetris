@@ -3,8 +3,12 @@
   "version": "1.0.0",
   "description": "tetris game",
   "main": "server/index.js",
+  "engines": {
+    "node": "^8.7.0",
+    "npm": "^5.6.0"
+  },
   "scripts": {
-    "start": "nodemon server/index.js",
+    "start": "nodemon server/index.js & webpack",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -23,6 +27,10 @@
   "homepage": "https://github.com/vasyl-n/tetris#readme",
   "dependencies": {
     "express": "^4.16.3",
-    "nodemon": "^1.17.2"
+    "nodemon": "^1.17.2",
+    "webpack": "^4.2.0"
+  },
+  "devDependencies": {
+    "webpack-cli": "^2.0.13"
   }
 }
