@@ -1,26 +1,19 @@
 import React from 'react';
-import Square from './Square.jsx'
-
+import possiblePieces from '../pieces.js';
+import Board from './Board.jsx';
 
 class Piece extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      shape: [[0,1,0,0], 
-              [0,1,0,0], 
-              [0,1,0,0], 
-              [0,1,0,0]]
     }
-  };
-
-  rotate() {
-
-  };
+  }
 
   render() {
+    console.log(possiblePieces)
     return (
-      <div className='piece'>
-        {this.state.shape.map((el, ind) => el.map((i, b) => <Square s={i} key={b}/>))}
+      <div>
+        <Board piece={possiblePieces[0]} />
       </div>
     );
   }

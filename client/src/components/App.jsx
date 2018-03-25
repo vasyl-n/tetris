@@ -1,6 +1,7 @@
 import React from 'react';
 import Header from './Header.jsx';
 import Board from './Board.jsx';
+import Piece from './Piece.jsx';
 
 class App extends React.Component {
   constructor(props) {
@@ -13,7 +14,7 @@ class App extends React.Component {
       <div className='app-container'>
         <Header />
         <div className='main-container'> 
-          <Board />
+          <Piece />
         </div>
       </div>
     );
