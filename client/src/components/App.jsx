@@ -1,14 +1,21 @@
 import React from 'react';
-
+import Header from './Header.jsx';
+import Board from './Board.jsx';
 
 class App extends React.Component {
-    render() {
-      return (
-        <div>
-          React Hello from other folder
-        </div>
-      );
-    }
+  constructor(props) {
+    super(props);
+    this.state = {}
   }
 
-export { App };
+  render() {
+    return (
+      <div className='main-container'>
+        <Header />
+        <Board />
+      </div>
+    );
+  }
+};
+
+export default App;

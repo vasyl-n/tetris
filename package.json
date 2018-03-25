@@ -8,8 +8,8 @@
     "npm": "^5.6.0"
   },
   "scripts": {
-    "start": "nodemon server/index.js",
-    "start-dev": "nodemon server/index.js & webpack",
+    "start": "node server/index.js",
+    "start-dev": "webpack -d --watch & nodemon server/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -39,6 +39,9 @@
     "webpack": "^4.2.0"
   },
   "devDependencies": {
-    "webpack-cli": "^2.0.13"
+    "css-loader": "^0.28.11",
+    "style-loader": "^0.20.3",
+    "webpack-cli": "^2.0.13",
+    "webpack-livereload-plugin": "^2.1.1"
   }
 }

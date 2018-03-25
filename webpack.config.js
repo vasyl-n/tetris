@@ -1,25 +1,32 @@
 const path = require('path');
+var LiveReloadPlugin = require('webpack-livereload-plugin');
 var SRC_DIR = path.join(__dirname, '/client/src');
 var DIST_DIR = path.join(__dirname, '/public');
 
 module.exports = {
-    entry: './client/src/app.jsx',
+    entry: { bundle: './client/src/index.jsx' },
     output: {
         path: DIST_DIR,
         filename: 'bundle.js'
       },
     module : {
-    rules: [
-        {
-            exclude: /(node_modules)/,
-            use: {
+        rules: [
+            {
+                test: /.jsx/,
                 loader: 'babel-loader',
-                options: {
-                    presets: ['es2015', 'react']
+                exclude: /node_modules/,
+                query: {
+                  presets: ['es2015', 'react']
                 }
+              },
+            { 
+                test: /\.css$/, 
+                use:['style-loader','css-loader'] 
             }
-        }
         ]
     },
-    watch: true
+    watch: true,
+    plugins: [
+        new LiveReloadPlugin()
+      ]
   };
