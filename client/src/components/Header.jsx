@@ -3,8 +3,8 @@ import React from 'react';
 const Header = () => {
 
   return (
-    <div className="Header">
-      this is header
+    <div className="header">
+      Super - Tetris
     </div>
   )
 

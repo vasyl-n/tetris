@@ -12,7 +12,7 @@ class Square extends React.Component {
       backgroundColor:'black'
     };
     var inActiveStyle = {
-      backgroundColor:'transparent'
+      backgroundColor:'lightblue'
     };
 
     return (
