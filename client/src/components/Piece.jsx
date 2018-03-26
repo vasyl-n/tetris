@@ -10,7 +10,6 @@ class Piece extends React.Component {
   }
 
   render() {
-    console.log(possiblePieces)
     return (
       <div>
         <Board piece={possiblePieces[0]} />

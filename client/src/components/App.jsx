@@ -6,7 +6,7 @@ import Piece from './Piece.jsx';
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {}
+    this.state = {};
   }
 
   render() {
@@ -20,5 +20,8 @@ class App extends React.Component {
     );
   }
 };
+
+
+
 
 export default App;
