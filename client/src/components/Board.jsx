@@ -9,7 +9,7 @@ class Board extends React.Component {
     super(props);
     this.state = {
       currentPieceCoordinates: [[],[],[],[]],
-      piece: function(){
+      piece: function() {
         var ind = Math.floor(Math.random() * Math.floor(possiblePieces.length));
         return possiblePieces[ind]
       }(),
@@ -26,8 +26,21 @@ class Board extends React.Component {
       }()
     };
 
+    this.isPieceDown = () => {
+      var result = true
+      console.log(this.state.currentPieceCoordinates)
+      for( var i = 0; i < this.state.currentPieceCoordinates.length; i++) {
+        if ( this.state.currentPieceCoordinates[i][0] === 19 ) {
+          result = false;
+          break
+        }
+      }
+      return result;
+    };
+
     this.getRandomPiece = () => {
       var ind = Math.floor(Math.random() * Math.floor(possiblePieces.length));
+      this.setState({piece: possiblePieces[ind]})
       return possiblePieces[ind]
     },
 
@@ -35,7 +48,6 @@ class Board extends React.Component {
       var result = true
       if( direction === 'left' ) {
         for( var i = 0; i < this.state.currentPieceCoordinates.length; i++) {
-          console.log(this.state.currentPieceCoordinates[i][1])
           if ( this.state.currentPieceCoordinates[i][1] === 0 ) {
             result = false;
             break
@@ -44,7 +56,6 @@ class Board extends React.Component {
       } 
       if( direction === 'right' ) {
         for( var i = 0; i < this.state.currentPieceCoordinates.length; i++) {
-          console.log(this.state.currentPieceCoordinates[i][1])
           if ( this.state.currentPieceCoordinates[i][1] === 9 ) {
             result = false;
             break;
@@ -72,7 +83,6 @@ class Board extends React.Component {
         board[el[0]][el[1]] = 1
       })
       this.setState({board: board})
-      console.log(this.state)
     };
 
     this.removeCurrentPieceFromBoard = () => {
@@ -155,6 +165,16 @@ class Board extends React.Component {
   };
 
   componentWillMount() {
+    var that = this
+    setInterval(function(){
+      if ( that.canMove('down')){
+        that.movePiece('down');
+      }
+      if ( !that.isPieceDown() ){
+        that.getRandomPiece();
+        that.placeNewPiece();
+      }
+    }, 1000)
     this.placeNewPiece();
     document.addEventListener("keydown", this.handleKeyDown.bind(this));
   };
