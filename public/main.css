@@ -1,0 +1,24 @@
+.board {
+  display: inline-grid;
+  grid-template-columns: auto auto auto auto auto auto auto auto auto auto;
+  width: 19rem;
+  height: 38rem;
+  border: solid 15px;
+}
+
+.square {
+  margin: 1px;
+}
+
+.main-container {
+  display: flex;
+  justify-content: center;
+}
+
+.header {
+  font-family: fantasy;
+  font-size: 28px;
+  text-align: center;
+  padding: 0.5rem;
+  font-weight: 900;
+}
