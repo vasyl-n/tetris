@@ -38,6 +38,9 @@ class Board extends React.Component {
         case keyCodes.downArrow:
           if ( this.canMove('down')){
             this.movePiece('down');
+            clearInterval(this.interval)
+            
+            this.setInt()
             if ( this.isPieceDown() ){
               this.placeNewPiece(this.getRandomPiece());
             }
@@ -60,9 +63,20 @@ class Board extends React.Component {
           break;
       }
     };
-
-
   };
+
+  setInt(){
+    var that = this;
+    this.interval = setInterval(function(){
+      if ( that.isPieceDown() ){
+        var rp = that.getRandomPiece()
+        that.placeNewPiece(rp);
+      }
+      else if ( that.canMove('down') && !that.isPieceDown()){
+        that.movePiece('down');
+      }
+    }, 1000)
+  }
 
   movePiece(where) {
     var newCoord = [];
@@ -86,32 +100,30 @@ class Board extends React.Component {
   };
 
   isPieceDown() {
-    var result = false
-    var currPieceCoord = this.state.currentPieceCoordinates
+    var result = false;
+    var currPieceCoord = this.state.currentPieceCoordinates;
     
     var isInCurrCoord = function(arr){
-      var res = false
+      var res = false;
       for ( var i = 0; i < currPieceCoord.length; i++){
         if ( currPieceCoord[i][0] === arr[0] &&
           currPieceCoord[i][1] === arr[1] ) {
             res === true;
-            return true
+            return true;
           }
       }
       return res;
     }
     
     for( var i = 0; i < this.state.currentPieceCoordinates.length; i++) {
-      var row = this.state.currentPieceCoordinates[i][0]
-      var col = this.state.currentPieceCoordinates[i][1]
+      var row = this.state.currentPieceCoordinates[i][0];
+      var col = this.state.currentPieceCoordinates[i][1];
       var squareCoordInNextRow = [this.state.currentPieceCoordinates[i][0] + 1, this.state.currentPieceCoordinates[i][1] ]
-      // console.log(this.state.currentPieceCoordinates, squareCoordInNextRow)
       if ( this.state.currentPieceCoordinates[i][0] === 19 ||
         (this.state.board[row + 1][col] === 1 && (!isInCurrCoord(squareCoordInNextRow) ) )
       ) {
-          // this.state.board[row + 1][col] === 1 && this.state.board[row + 1][col] !=== this.state.currentPieceCoordinates[i][0] )
         result = true;
-        break
+        break;
       }
     }
     return result;
@@ -140,6 +152,7 @@ class Board extends React.Component {
       var a = 3;
       for ( var j = 0; j < 4; j++ ) {
         if ( arg ) {
+          console.log(arg[i])
           var c = Number(arg[i][j]);
         } else {
           var c = Number(this.state.piece[i][j]);
@@ -162,9 +175,12 @@ class Board extends React.Component {
 
   getRandomPiece() {
     var ind = Math.floor(Math.random() * Math.floor(possiblePieces.length));
-    this.setState({piece: possiblePieces[ind]})
     return possiblePieces[ind]
   };
+
+  setPieceState(ar) {
+    this.setState({piece:ar});
+  }
 
   canMove(direction) {
     var result = true
@@ -185,29 +201,15 @@ class Board extends React.Component {
       }
     } 
     if( direction === 'down' ) {
-      for( var i = 0; i < this.state.currentPieceCoordinates.length; i++) {
-
-        if ( this.state.currentPieceCoordinates[i][0] === 19 ) {
-          result = false;
-          break;
-        }
-      }
+      result === !this.isPieceDown();
     } 
     return result
   }
 
   componentWillMount() {
-    var that = this
-    setInterval(function(){
-      console.log(that.isPieceDown() && !that.isPieceDown() )
-      if ( that.canMove('down') && !that.isPieceDown()){
-        that.movePiece('down');
-      }
-      else if ( that.isPieceDown() ){
-        that.placeNewPiece(that.getRandomPiece());
-      }
-    }, 1000)
-    this.placeNewPiece(that.getRandomPiece());
+    clearInterval(this.interval)
+    this.setInt()
+    this.placeNewPiece(this.getRandomPiece());
     document.addEventListener("keydown", this.handleKeyDown.bind(this));
   };
 
