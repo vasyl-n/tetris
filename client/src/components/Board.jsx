@@ -99,28 +99,29 @@ class Board extends React.Component {
     this.updatePiece()
   };
 
+
+  isInCurrCoord(arr){
+    var currPieceCoord = this.state.currentPieceCoordinates;
+    var res = false;
+    for ( var i = 0; i < currPieceCoord.length; i++){
+      if ( currPieceCoord[i][0] === arr[0] &&
+        currPieceCoord[i][1] === arr[1] ) {
+          res === true;
+          return true;
+        }
+    }
+    return res;
+  }
+
   isPieceDown() {
     var result = false;
     var currPieceCoord = this.state.currentPieceCoordinates;
-    
-    var isInCurrCoord = function(arr){
-      var res = false;
-      for ( var i = 0; i < currPieceCoord.length; i++){
-        if ( currPieceCoord[i][0] === arr[0] &&
-          currPieceCoord[i][1] === arr[1] ) {
-            res === true;
-            return true;
-          }
-      }
-      return res;
-    }
-    
     for( var i = 0; i < this.state.currentPieceCoordinates.length; i++) {
       var row = this.state.currentPieceCoordinates[i][0];
       var col = this.state.currentPieceCoordinates[i][1];
       var squareCoordInNextRow = [this.state.currentPieceCoordinates[i][0] + 1, this.state.currentPieceCoordinates[i][1] ]
       if ( this.state.currentPieceCoordinates[i][0] === 19 ||
-        (this.state.board[row + 1][col] === 1 && (!isInCurrCoord(squareCoordInNextRow) ) )
+        (this.state.board[row + 1][col] === 1 && (!this.isInCurrCoord(squareCoordInNextRow) ) )
       ) {
         result = true;
         break;
@@ -148,16 +149,10 @@ class Board extends React.Component {
   placeNewPiece (arg) {
     var pieceCoord = []
     var board = this.state.board.slice();
-    for( var i = 0; i <= 3; i++ ) {
+    for( var i = 0; i < 2; i++ ) {
       var a = 3;
       for ( var j = 0; j < 4; j++ ) {
-        if ( arg ) {
-          console.log(arg[i])
-          var c = Number(arg[i][j]);
-        } else {
-          var c = Number(this.state.piece[i][j]);
-        }
-        board[i][a] = c;
+        board[i][a] = Number(arg[i][j]);
         if(board[i][a] === 1) {
           pieceCoord.push([i, a])
         }
@@ -166,10 +161,6 @@ class Board extends React.Component {
     }
     this.setState({ board: board }) 
     this.setState({ currentPieceCoordinates: pieceCoord})
-  };
-
-  rotate () {
-
   };
 
 
@@ -194,7 +185,7 @@ class Board extends React.Component {
     } 
     if( direction === 'right' ) {
       for( var i = 0; i < this.state.currentPieceCoordinates.length; i++) {
-        if ( this.state.currentPieceCoordinates[i][1] === 9 ) {
+        if ( this.state.currentPieceCoordinates[i][1] === 9 || ( this.state.board[this.state.currentPieceCoordinates[i][1] + 1] === 1 && !this.isInCurrCoord([ this.state.currentPieceCoordinates[i][1], this.state.currentPieceCoordinates[i][1]+1]) ) ) {
           result = false;
           break;
         }
@@ -204,6 +195,9 @@ class Board extends React.Component {
       result === !this.isPieceDown();
     } 
     return result
+  }
+
+  rowShouldDisappear(){
   }
 
   componentWillMount() {
