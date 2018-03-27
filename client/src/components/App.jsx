@@ -9,13 +9,18 @@ class App extends React.Component {
     this.state = {};
   }
 
+  // componentWillMount() {
+  //   console.log(this)
+  //   document.addEventListener("keydown", this.fun.bind(this));
+  // };
+
   render() {
     return (
       <div className='app-container'>
         <Header />
         <div className='main-container'> 
           {/* <Piece /> */}
-          <Board />
+          <Board/>
         </div>
       </div>
     );

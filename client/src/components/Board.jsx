@@ -26,94 +26,6 @@ class Board extends React.Component {
       }()
     };
 
-    this.isPieceDown = () => {
-      var result = true
-      console.log(this.state.currentPieceCoordinates)
-      for( var i = 0; i < this.state.currentPieceCoordinates.length; i++) {
-        if ( this.state.currentPieceCoordinates[i][0] === 19 ) {
-          result = false;
-          break
-        }
-      }
-      return result;
-    };
-
-    this.getRandomPiece = () => {
-      var ind = Math.floor(Math.random() * Math.floor(possiblePieces.length));
-      this.setState({piece: possiblePieces[ind]})
-      return possiblePieces[ind]
-    },
-
-    this.canMove = direction => {
-      var result = true
-      if( direction === 'left' ) {
-        for( var i = 0; i < this.state.currentPieceCoordinates.length; i++) {
-          if ( this.state.currentPieceCoordinates[i][1] === 0 ) {
-            result = false;
-            break
-          }
-        }
-      } 
-      if( direction === 'right' ) {
-        for( var i = 0; i < this.state.currentPieceCoordinates.length; i++) {
-          if ( this.state.currentPieceCoordinates[i][1] === 9 ) {
-            result = false;
-            break;
-          }
-        }
-      } 
-      if( direction === 'down' ) {
-        for( var i = 0; i < this.state.currentPieceCoordinates.length; i++) {
-          if ( this.state.currentPieceCoordinates[i][0] === 19 ) {
-            result = false;
-            break;
-          }
-        }
-      } 
-      return result
-    }
-
-    this.rotate = () => {
-
-    };
-    
-    this.updatePiece = () => {
-      var board = this.state.board.slice();
-      this.state.currentPieceCoordinates.forEach((el, ind)=> {
-        board[el[0]][el[1]] = 1
-      })
-      this.setState({board: board})
-    };
-
-    this.removeCurrentPieceFromBoard = () => {
-      var board = this.state.board.slice();
-      this.state.currentPieceCoordinates.forEach((el, ind)=> {
-        board[el[0]][el[1]] = 0
-      })
-      this.setState({board: board})
-    }
-
-    this.movePiece = (where) => {
-      var newCoord = [];
-      this.state.currentPieceCoordinates.forEach((el, ind) => {
-        var newPix = [];
-        if (where === 'down') {
-          newPix.push(el[0] + 1);
-          newPix.push(el[1]);
-        } else if ( where === 'left' ) {
-          newPix.push(el[0]);
-          newPix.push(el[1]-1);
-        } else if ( where === 'right' ) {
-          newPix.push(el[0]);
-          newPix.push(el[1]+1);
-        }
-        newCoord.push(newPix);
-      });
-      this.removeCurrentPieceFromBoard()
-      this.setState({currentPieceCoordinates: newCoord})
-      this.updatePiece()
-    };
-
     this.handleKeyDown = (event) => {
       var keyCodes = {
         leftArrow: 37,
@@ -123,59 +35,179 @@ class Board extends React.Component {
         space: 32
       }
       switch( event.keyCode ) {
-          case keyCodes.downArrow:
-              if ( this.canMove('down')){
-                this.movePiece('down');
-              }
-              break;
-          case keyCodes.leftArrow:
-              if ( this.canMove('left')){
-                this.movePiece('left');
-              }
-              break;
-          case keyCodes.rightArrow:
-              if ( this.canMove('right')){
-                this.movePiece('right');
-              }
-              break;
-          case keyCodes.upArrow:
-              this.rotate();
-              break;
-          default: 
-              break;
+        case keyCodes.downArrow:
+          if ( this.canMove('down')){
+            this.movePiece('down');
+            if ( this.isPieceDown() ){
+              this.placeNewPiece(this.getRandomPiece());
+            }
+          }
+          break;
+        case keyCodes.leftArrow:
+          if ( this.canMove('left')){
+            this.movePiece('left');
+          }
+          break;
+        case keyCodes.rightArrow:
+          if ( this.canMove('right')){
+            this.movePiece('right');
+          }
+          break;
+        case keyCodes.upArrow:
+          this.rotate();
+          break;
+        default: 
+          break;
       }
     };
 
-    this.placeNewPiece = () => {
-      var pieceCoord = []
-      var board = this.state.board.slice();
-      for( var i = 0; i <= 3; i++ ) {
-        var a = 3;
-        for ( var j = 0; j < 4; j++ ) {
-          board[i][a] = Number(this.state.piece[i][j]);
-          if(board[i][a] === 1) {
-            pieceCoord.push([i, a])
+
+  };
+
+  movePiece(where) {
+    var newCoord = [];
+    this.state.currentPieceCoordinates.forEach((el, ind) => {
+      var newPix = [];
+      if (where === 'down') {
+        newPix.push(el[0] + 1);
+        newPix.push(el[1]);
+      } else if ( where === 'left' ) {
+        newPix.push(el[0]);
+        newPix.push(el[1]-1);
+      } else if ( where === 'right' ) {
+        newPix.push(el[0]);
+        newPix.push(el[1]+1);
+      }
+      newCoord.push(newPix);
+    });
+    this.removeCurrentPieceFromBoard()
+    this.setState({currentPieceCoordinates: newCoord})
+    this.updatePiece()
+  };
+
+  isPieceDown() {
+    var result = false
+    var currPieceCoord = this.state.currentPieceCoordinates
+    
+    var isInCurrCoord = function(arr){
+      var res = false
+      for ( var i = 0; i < currPieceCoord.length; i++){
+        if ( currPieceCoord[i][0] === arr[0] &&
+          currPieceCoord[i][1] === arr[1] ) {
+            res === true;
+            return true
           }
-          a++;
+      }
+      return res;
+    }
+    
+    for( var i = 0; i < this.state.currentPieceCoordinates.length; i++) {
+      var row = this.state.currentPieceCoordinates[i][0]
+      var col = this.state.currentPieceCoordinates[i][1]
+      var squareCoordInNextRow = [this.state.currentPieceCoordinates[i][0] + 1, this.state.currentPieceCoordinates[i][1] ]
+      // console.log(this.state.currentPieceCoordinates, squareCoordInNextRow)
+      if ( this.state.currentPieceCoordinates[i][0] === 19 ||
+        (this.state.board[row + 1][col] === 1 && (!isInCurrCoord(squareCoordInNextRow) ) )
+      ) {
+          // this.state.board[row + 1][col] === 1 && this.state.board[row + 1][col] !=== this.state.currentPieceCoordinates[i][0] )
+        result = true;
+        break
+      }
+    }
+    return result;
+  };
+
+  updatePiece() {
+    var board = this.state.board.slice();
+    this.state.currentPieceCoordinates.forEach((el, ind)=> {
+      board[el[0]][el[1]] = 1
+    })
+    this.setState({board: board})
+  };
+
+  removeCurrentPieceFromBoard() {
+    var board = this.state.board.slice();
+    this.state.currentPieceCoordinates.forEach((el, ind)=> {
+      board[el[0]][el[1]] = 0
+    })
+    this.setState({board: board})
+  }
+
+  placeNewPiece (arg) {
+    var pieceCoord = []
+    var board = this.state.board.slice();
+    for( var i = 0; i <= 3; i++ ) {
+      var a = 3;
+      for ( var j = 0; j < 4; j++ ) {
+        if ( arg ) {
+          var c = Number(arg[i][j]);
+        } else {
+          var c = Number(this.state.piece[i][j]);
+        }
+        board[i][a] = c;
+        if(board[i][a] === 1) {
+          pieceCoord.push([i, a])
+        }
+        a++;
+      }
+    }
+    this.setState({ board: board }) 
+    this.setState({ currentPieceCoordinates: pieceCoord})
+  };
+
+  rotate () {
+
+  };
+
+
+  getRandomPiece() {
+    var ind = Math.floor(Math.random() * Math.floor(possiblePieces.length));
+    this.setState({piece: possiblePieces[ind]})
+    return possiblePieces[ind]
+  };
+
+  canMove(direction) {
+    var result = true
+    if( direction === 'left' ) {
+      for( var i = 0; i < this.state.currentPieceCoordinates.length; i++) {
+        if ( this.state.currentPieceCoordinates[i][1] === 0 ) {
+          result = false;
+          break
         }
       }
-      this.setState({ board: board }) 
-      this.setState({ currentPieceCoordinates: pieceCoord})
-    };
-  };
+    } 
+    if( direction === 'right' ) {
+      for( var i = 0; i < this.state.currentPieceCoordinates.length; i++) {
+        if ( this.state.currentPieceCoordinates[i][1] === 9 ) {
+          result = false;
+          break;
+        }
+      }
+    } 
+    if( direction === 'down' ) {
+      for( var i = 0; i < this.state.currentPieceCoordinates.length; i++) {
+
+        if ( this.state.currentPieceCoordinates[i][0] === 19 ) {
+          result = false;
+          break;
+        }
+      }
+    } 
+    return result
+  }
 
   componentWillMount() {
     var that = this
     setInterval(function(){
-      if ( that.canMove('down')){
+      console.log(that.isPieceDown() && !that.isPieceDown() )
+      if ( that.canMove('down') && !that.isPieceDown()){
         that.movePiece('down');
       }
-      if ( !that.isPieceDown() ){
-        that.getRandomPiece();
-        that.placeNewPiece();
+      else if ( that.isPieceDown() ){
+        that.placeNewPiece(that.getRandomPiece());
       }
     }, 1000)
-    this.placeNewPiece();
+    this.placeNewPiece(that.getRandomPiece());
     document.addEventListener("keydown", this.handleKeyDown.bind(this));
   };
 
