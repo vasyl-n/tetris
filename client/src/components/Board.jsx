@@ -39,7 +39,6 @@ class Board extends React.Component {
           if ( this.canMove('down')){
             this.movePiece('down');
             clearInterval(this.interval)
-            
             this.setInt()
             if ( this.isPieceDown() ){
               this.placeNewPiece(this.getRandomPiece());
@@ -141,12 +140,16 @@ class Board extends React.Component {
   removeCurrentPieceFromBoard() {
     var board = this.state.board.slice();
     this.state.currentPieceCoordinates.forEach((el, ind)=> {
-      board[el[0]][el[1]] = 0
+      board[el[0]][el[1]] = 0;
     })
-    this.setState({board: board})
+    this.setState({board: board});
   }
 
   placeNewPiece (arg) {
+    if( this.isGameOver() ){
+      clearInterval(this.interval);
+      this.props.gameOver();
+    }
     var pieceCoord = []
     var board = this.state.board.slice();
     for( var i = 0; i < 2; i++ ) {
@@ -154,13 +157,13 @@ class Board extends React.Component {
       for ( var j = 0; j < 4; j++ ) {
         board[i][a] = Number(arg[i][j]);
         if(board[i][a] === 1) {
-          pieceCoord.push([i, a])
+          pieceCoord.push([i, a]);
         }
         a++;
       }
     }
-    this.setState({ board: board }) 
-    this.setState({ currentPieceCoordinates: pieceCoord})
+    this.setState({ board: board }) ;
+    this.setState({ currentPieceCoordinates: pieceCoord});
   };
 
 
@@ -200,11 +203,20 @@ class Board extends React.Component {
   rowShouldDisappear(){
   }
 
-  componentWillMount() {
+  gameStart() {
     clearInterval(this.interval)
     this.setInt()
     this.placeNewPiece(this.getRandomPiece());
     document.addEventListener("keydown", this.handleKeyDown.bind(this));
+  }
+
+  isGameOver() {
+    if( this.state.board[1][3] === 1 || this.state.board[1][4] === 1 || this.state.board[1][5] === 1 ) return true;
+    return false;
+  }
+
+  componentWillMount() {
+    this.gameStart()
   };
 
   componentWillUnmount() {

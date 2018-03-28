@@ -13,6 +13,13 @@ class App extends React.Component {
   //   console.log(this)
   //   document.addEventListener("keydown", this.fun.bind(this));
   // };
+  gameOver() {
+    console.log('gameOver')
+  }
+
+  startGame() {
+
+  }
 
   render() {
     return (
@@ -20,7 +27,8 @@ class App extends React.Component {
         <Header />
         <div className='main-container'> 
           {/* <Piece /> */}
-          <Board/>
+          <Board gameOver={this.gameOver}
+           />
         </div>
       </div>
     );
