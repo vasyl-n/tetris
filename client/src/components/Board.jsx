@@ -73,14 +73,19 @@ class Board extends React.Component {
   }
 
   clearRows(rows) {
-    var row = rows[0];
-    var board = this.state.board.slice();
-    for ( var i = row; i >= 1; i-- ) {
-      for ( var cellInd = 0; cellInd < 10; cellInd++ ) {
-        board[i][cellInd] = board[i - 1][cellInd];
+    console.log(rows)
+    if ( rows.length ) {
+      // debugger
+      var board = this.state.board.slice();
+      for ( var row = 0; row < rows.length; row++) {
+        for ( var i = rows[row]; i >= 1; i-- ) {
+          for ( var cellInd = 0; cellInd < 10; cellInd++ ) {
+            board[i][cellInd] = board[i - 1][cellInd];
+          }
+        }
       }
+      this.setState({board: board})
     }
-    this.setState({board: board})
   }
 
   setInt(){
