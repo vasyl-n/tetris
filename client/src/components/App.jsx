@@ -9,16 +9,8 @@ class App extends React.Component {
     this.state = {};
   }
 
-  // componentWillMount() {
-  //   console.log(this)
-  //   document.addEventListener("keydown", this.fun.bind(this));
-  // };
   gameOver() {
     console.log('gameOver')
-  }
-
-  startGame() {
-
   }
 
   render() {

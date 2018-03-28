@@ -10,10 +10,11 @@ class Board extends React.Component {
     super(props);
     this.state = {
       currentPieceCoordinates: [[],[],[],[]],
-      piece: function() {
-        var ind = Math.floor(Math.random() * Math.floor(possiblePieces.length));
-        return possiblePieces[ind]
-      }(),
+      currentPieceState: 0,
+        piece:   function(){  var ind = Math.floor(Math.random() * Math.floor(possiblePieces.length));
+        return possiblePieces[ind];}()
+      ,
+      pieceInd: null,
       board: function(){
         var arr = []
         for( var i = 0; i < 20; i++){
@@ -66,7 +67,27 @@ handleKeyDown (event) {
   };
 
   rotate() {
-    console.log(this.state.piece)
+    var coord = this.state.currentPieceCoordinates;
+    console.log(coord, this.state.pieceInd)
+    // var state = this.state.currentPieceState + 90;
+    // this.setState({currentPieceState: state});
+    var newCoord = [];
+    if( this.state.pieceInd === 0 ) {
+      newCoord.push([coord[0][0]-1,  coord[0][1]+1]);
+      newCoord.push([coord[0][0],  coord[0][1]+1]);
+      newCoord.push([coord[0][0]+1,  coord[0][1]+1]);
+      newCoord.push([coord[0][0]+2,  coord[0][1]+1]);
+    }
+    if( this.state.pieceInd === 2 ) {
+      newCoord.push([coord[0][0]-1,  coord[0][1]+1]);
+      newCoord.push([coord[0][0],  coord[0][1]+1]);
+      newCoord.push([coord[0][0]+1,  coord[0][1]+1]);
+      newCoord.push([coord[0][0]+2,  coord[0][1]+1]);
+    }
+    console.log(newCoord, 'NCCCCCC')
+    this.removeCurrentPieceFromBoard();
+    this.setState({currentPieceCoordinates: newCoord});
+    this.updatePiece();
   }
 
   handlePieceDown() {
@@ -96,10 +117,9 @@ handleKeyDown (event) {
     var that = this;
     
     this.interval = setInterval(function() {
-        if ( that.isPieceDown() ) {
-          that.handlePieceDown()
-        }
-      else if ( that.canMove('down') && !that.isPieceDown()) {
+      if ( that.isPieceDown() ) {
+        that.handlePieceDown()
+      } else if ( that.canMove('down') && !that.isPieceDown()) {
         that.movePiece('down');
       }
     }, 1000)
@@ -193,20 +213,19 @@ handleKeyDown (event) {
         a++;
       }
     }
-    this.setState({ board: board }) ;
+    this.setState({ board: board });
     this.setState({ currentPieceCoordinates: pieceCoord});
   };
 
 
   getRandomPiece() {
     var ind = Math.floor(Math.random() * Math.floor(possiblePieces.length));
-    return possiblePieces[ind]
-    this.setState({piece: possiblePieces[ind]})
+    // this.setState({piece: possiblePieces[ind]});
+    this.setState({pieceInd: ind});
+    return possiblePieces[ind];
+
   };
 
-  setPieceState(ar) {
-    this.setState({piece:ar});
-  }
 
   canMove(direction) {
     var result = true
