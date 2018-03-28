@@ -38,10 +38,10 @@ class Board extends React.Component {
         case keyCodes.downArrow:
           if ( this.canMove('down')){
             this.movePiece('down');
-            clearInterval(this.interval)
-            this.setInt()
-            if ( this.isPieceDown() ){
-              this.placeNewPiece(this.getRandomPiece());
+            clearInterval(this.interval);
+            this.setInt();
+            if ( this.isPieceDown() ) {
+              this.handlePieceDown()
             }
           }
           break;
@@ -64,14 +64,33 @@ class Board extends React.Component {
     };
   };
 
+  handlePieceDown() {
+      var rowsToClear = this.rowShouldDisappear();
+      if ( rowsToClear.length > 0 ) {
+        this.clearRows(rowsToClear);
+      }
+      this.placeNewPiece(this.getRandomPiece());
+  }
+
+  clearRows(rows) {
+    var row = rows[0];
+    var board = this.state.board.slice();
+    for ( var i = row; i >= 1; i-- ) {
+      for ( var cellInd = 0; cellInd < 10; cellInd++ ) {
+        board[i][cellInd] = board[i - 1][cellInd];
+      }
+    }
+    this.setState({board: board})
+  }
+
   setInt(){
     var that = this;
-    this.interval = setInterval(function(){
-      if ( that.isPieceDown() ){
-        var rp = that.getRandomPiece()
-        that.placeNewPiece(rp);
-      }
-      else if ( that.canMove('down') && !that.isPieceDown()){
+    
+    this.interval = setInterval(function() {
+        if ( that.isPieceDown() ) {
+          that.handlePieceDown()
+        }
+      else if ( that.canMove('down') && !that.isPieceDown()) {
         that.movePiece('down');
       }
     }, 1000)
@@ -201,6 +220,16 @@ class Board extends React.Component {
   }
 
   rowShouldDisappear(){
+    var arr = [];
+    this.state.board.forEach((el, ind) => {
+      if (el.reduce((acc, cell) => {
+        if ( acc === false ) return false;
+        return cell === 1;
+      }) ) {
+        arr.push( ind );
+      }
+    })
+    return arr;
   }
 
   gameStart() {
@@ -231,7 +260,5 @@ class Board extends React.Component {
     );
   }
 };
-
-
 
 export default Board;
