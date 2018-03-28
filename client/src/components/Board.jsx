@@ -3,6 +3,7 @@ import Header from './Header.jsx';
 import Piece from './Piece.jsx';
 import Square from './Square.jsx';
 import possiblePieces from '../pieces.js';
+import helpers from '../helpers.js'
 
 class Board extends React.Component {
   constructor(props) {
@@ -25,57 +26,60 @@ class Board extends React.Component {
         return arr
       }()
     };
-
-    this.handleKeyDown = (event) => {
-      var keyCodes = {
-        leftArrow: 37,
-        upArrow:38,
-        rightArrow: 39,
-        downArrow: 40,
-        space: 32
-      }
-      switch( event.keyCode ) {
-        case keyCodes.downArrow:
-          if ( this.canMove('down')){
-            this.movePiece('down');
-            clearInterval(this.interval);
-            this.setInt();
-            if ( this.isPieceDown() ) {
-              this.handlePieceDown()
-            }
-          }
-          break;
-        case keyCodes.leftArrow:
-          if ( this.canMove('left')){
-            this.movePiece('left');
-          }
-          break;
-        case keyCodes.rightArrow:
-          if ( this.canMove('right')){
-            this.movePiece('right');
-          }
-          break;
-        case keyCodes.upArrow:
-          this.rotate();
-          break;
-        default: 
-          break;
-      }
-    };
   };
 
+handleKeyDown (event) {
+    var keyCodes = {
+      leftArrow: 37,
+      upArrow:38,
+      rightArrow: 39,
+      downArrow: 40,
+      space: 32
+    }
+    switch( event.keyCode ) {
+      case keyCodes.downArrow:
+        if ( this.canMove('down')){
+          this.movePiece('down');
+          clearInterval(this.interval);
+          this.setInt();
+          if ( this.isPieceDown() ) {
+            this.handlePieceDown()
+          }
+        }
+        break;
+      case keyCodes.leftArrow:
+        if ( this.canMove('left')){
+          this.movePiece('left');
+        }
+        break;
+      case keyCodes.rightArrow:
+        if ( this.canMove('right')){
+          this.movePiece('right');
+        }
+        break;
+      case keyCodes.upArrow:
+        this.rotate();
+        break;
+      default: 
+        break;
+    }
+  };
+
+  rotate() {
+    console.log(this.state.piece)
+  }
+
   handlePieceDown() {
-      var rowsToClear = this.rowShouldDisappear();
-      if ( rowsToClear.length > 0 ) {
-        this.clearRows(rowsToClear);
-      }
-      this.placeNewPiece(this.getRandomPiece());
+    var rowsToClear = this.rowShouldDisappear();
+    if ( rowsToClear.length > 0 ) {
+      this.clearRows(rowsToClear);
+    }
+    this.placeNewPiece(this.getRandomPiece());
   }
 
   clearRows(rows) {
     console.log(rows)
     if ( rows.length ) {
-      // debugger
       var board = this.state.board.slice();
       for ( var row = 0; row < rows.length; row++) {
         for ( var i = rows[row]; i >= 1; i-- ) {
@@ -170,6 +174,7 @@ class Board extends React.Component {
   }
 
   placeNewPiece (arg) {
+    
     if( this.isGameOver() ){
       clearInterval(this.interval);
       this.props.gameOver();
@@ -178,8 +183,10 @@ class Board extends React.Component {
     var board = this.state.board.slice();
     for( var i = 0; i < 2; i++ ) {
       var a = 3;
+      var p = arg || this.state.piece
+      this.setState({piece: p})
       for ( var j = 0; j < 4; j++ ) {
-        board[i][a] = Number(arg[i][j]);
+        board[i][a] = Number(p[i][j]);
         if(board[i][a] === 1) {
           pieceCoord.push([i, a]);
         }
@@ -194,6 +201,7 @@ class Board extends React.Component {
   getRandomPiece() {
     var ind = Math.floor(Math.random() * Math.floor(possiblePieces.length));
     return possiblePieces[ind]
+    this.setState({piece: possiblePieces[ind]})
   };
 
   setPieceState(ar) {
@@ -240,7 +248,8 @@ class Board extends React.Component {
   gameStart() {
     clearInterval(this.interval)
     this.setInt()
-    this.placeNewPiece(this.getRandomPiece());
+    this.getRandomPiece()
+    this.placeNewPiece();
     document.addEventListener("keydown", this.handleKeyDown.bind(this));
   }
 
