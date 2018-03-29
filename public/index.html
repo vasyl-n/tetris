@@ -11,5 +11,26 @@
         <div id="app"></div>
         <script type="text/javascript" src="bundle.js"></script>
         <script src="http://localhost:35729/livereload.js"></script>
+
+        <audio autoplay loop id="yourAudio">
+            <source src="tetris.mp3" type="audio/mpeg">
+        </audio>
+        <a href="#" id="audioControl">pause!</a>
     </body>
+    <script>var yourAudio = document.getElementById('yourAudio'),
+            ctrl = document.getElementById('audioControl');
+        
+        ctrl.onclick = function () {
+        
+            // Update the Button
+            var play = ctrl.innerHTML === 'play!';
+            ctrl.innerHTML = play ? 'pause!' : 'play!';
+        
+            // Update the Audio
+            var method = play ? 'play' : 'pause';
+            yourAudio[method]();
+        
+            // Prevent Default Action
+            return false;
+        };</script>
 </html>

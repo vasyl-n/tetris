@@ -40,7 +40,8 @@ handleKeyDown (event) {
       upArrow:38,
       rightArrow: 39,
       downArrow: 40,
-      space: 32
+      space: 32,
+      return: 13
     }
     switch( event.keyCode ) {
       case keyCodes.downArrow:

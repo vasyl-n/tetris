@@ -2,7 +2,7 @@
   display: inline-grid;
   grid-template-columns: auto auto auto auto auto auto auto auto auto auto;
   width: 19rem;
-  height: 38rem;
+  height: 37rem;
   border: solid 15px;
 }
 
@@ -19,6 +19,6 @@
   font-family: fantasy;
   font-size: 28px;
   text-align: center;
-  padding: 0.5rem;
+  padding: 1rem;
   font-weight: 900;
 }
