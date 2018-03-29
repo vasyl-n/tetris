@@ -3,7 +3,7 @@ import Header from './Header.jsx';
 import Piece from './Piece.jsx';
 import Square from './Square.jsx';
 import possiblePieces from '../pieces.js';
-import helpers from '../helpers.js'
+import { movePieceLogic, getNextPieceState, rowShouldDisappear, getNewCoordAfterRotation} from '../helpers.js';
 
 class Board extends React.Component {
   constructor(props) {
@@ -11,9 +11,7 @@ class Board extends React.Component {
     this.state = {
       currentPieceCoordinates: [[],[],[],[]],
       currentPieceState: 0,
-        piece:   function(){  var ind = Math.floor(Math.random() * Math.floor(possiblePieces.length));
-        return possiblePieces[ind];}()
-      ,
+      piece: null,
       pieceInd: null,
       board: function(){
         var arr = []
@@ -68,30 +66,21 @@ handleKeyDown (event) {
 
   rotate() {
     var coord = this.state.currentPieceCoordinates;
-    console.log(coord, this.state.pieceInd)
-    // var state = this.state.currentPieceState + 90;
-    // this.setState({currentPieceState: state});
-    var newCoord = [];
-    if( this.state.pieceInd === 0 ) {
-      newCoord.push([coord[0][0]-1,  coord[0][1]+1]);
-      newCoord.push([coord[0][0],  coord[0][1]+1]);
-      newCoord.push([coord[0][0]+1,  coord[0][1]+1]);
-      newCoord.push([coord[0][0]+2,  coord[0][1]+1]);
-    }
-    if( this.state.pieceInd === 2 ) {
-      newCoord.push([coord[0][0]-1,  coord[0][1]+1]);
-      newCoord.push([coord[0][0],  coord[0][1]+1]);
-      newCoord.push([coord[0][0]+1,  coord[0][1]+1]);
-      newCoord.push([coord[0][0]+2,  coord[0][1]+1]);
-    }
+    console.log(coord, this.state.pieceInd, this.state.currentPieceState)
+    var newCoord = getNewCoordAfterRotation(coord, this.state.pieceInd, this.state.currentPieceState)
+    this.setState((state, props) => {
+      // console.log(stat)
+      return { currentPieceState: getNextPieceState(state.currentPieceState) }
+    });
     console.log(newCoord, 'NCCCCCC')
     this.removeCurrentPieceFromBoard();
     this.setState({currentPieceCoordinates: newCoord});
     this.updatePiece();
   }
 
+
   handlePieceDown() {
-    var rowsToClear = this.rowShouldDisappear();
+    var rowsToClear = rowShouldDisappear(this.state.board);
     if ( rowsToClear.length > 0 ) {
       this.clearRows(rowsToClear);
     }
@@ -99,7 +88,6 @@ handleKeyDown (event) {
   }
 
   clearRows(rows) {
-    console.log(rows)
     if ( rows.length ) {
       var board = this.state.board.slice();
       for ( var row = 0; row < rows.length; row++) {
@@ -115,7 +103,6 @@ handleKeyDown (event) {
 
   setInt(){
     var that = this;
-    
     this.interval = setInterval(function() {
       if ( that.isPieceDown() ) {
         that.handlePieceDown()
@@ -126,21 +113,7 @@ handleKeyDown (event) {
   }
 
   movePiece(where) {
-    var newCoord = [];
-    this.state.currentPieceCoordinates.forEach((el, ind) => {
-      var newPix = [];
-      if (where === 'down') {
-        newPix.push(el[0] + 1);
-        newPix.push(el[1]);
-      } else if ( where === 'left' ) {
-        newPix.push(el[0]);
-        newPix.push(el[1]-1);
-      } else if ( where === 'right' ) {
-        newPix.push(el[0]);
-        newPix.push(el[1]+1);
-      }
-      newCoord.push(newPix);
-    });
+    var newCoord = movePieceLogic(this.state.currentPieceCoordinates, where);
     this.removeCurrentPieceFromBoard()
     this.setState({currentPieceCoordinates: newCoord})
     this.updatePiece()
@@ -194,16 +167,16 @@ handleKeyDown (event) {
   }
 
   placeNewPiece (arg) {
-    
     if( this.isGameOver() ){
       clearInterval(this.interval);
+      document.removeEventListener("keydown", this.handleKeyDown.bind(this));
       this.props.gameOver();
     }
     var pieceCoord = []
     var board = this.state.board.slice();
+    var p = arg || this.state.piece
     for( var i = 0; i < 2; i++ ) {
       var a = 3;
-      var p = arg || this.state.piece
       this.setState({piece: p})
       for ( var j = 0; j < 4; j++ ) {
         board[i][a] = Number(p[i][j]);
@@ -215,12 +188,14 @@ handleKeyDown (event) {
     }
     this.setState({ board: board });
     this.setState({ currentPieceCoordinates: pieceCoord});
+    this.setState({ currentPieceState: 0})
   };
 
 
   getRandomPiece() {
     var ind = Math.floor(Math.random() * Math.floor(possiblePieces.length));
-    // this.setState({piece: possiblePieces[ind]});
+    this.setState({piece: possiblePieces[ind]});
+    console.log(ind);
     this.setState({pieceInd: ind});
     return possiblePieces[ind];
 
@@ -239,7 +214,9 @@ handleKeyDown (event) {
     } 
     if( direction === 'right' ) {
       for( var i = 0; i < this.state.currentPieceCoordinates.length; i++) {
-        if ( this.state.currentPieceCoordinates[i][1] === 9 || ( this.state.board[this.state.currentPieceCoordinates[i][1] + 1] === 1 && !this.isInCurrCoord([ this.state.currentPieceCoordinates[i][1], this.state.currentPieceCoordinates[i][1]+1]) ) ) {
+        if ( this.state.currentPieceCoordinates[i][1] === 9 || 
+          ( this.state.board[this.state.currentPieceCoordinates[i][1] + 1] === 1 && 
+            !this.isInCurrCoord([ this.state.currentPieceCoordinates[i][1], this.state.currentPieceCoordinates[i][1]+1]) ) ) {
           result = false;
           break;
         }
@@ -251,24 +228,11 @@ handleKeyDown (event) {
     return result
   }
 
-  rowShouldDisappear(){
-    var arr = [];
-    this.state.board.forEach((el, ind) => {
-      if (el.reduce((acc, cell) => {
-        if ( acc === false ) return false;
-        return cell === 1;
-      }) ) {
-        arr.push( ind );
-      }
-    })
-    return arr;
-  }
 
   gameStart() {
-    clearInterval(this.interval)
-    this.setInt()
-    this.getRandomPiece()
-    this.placeNewPiece();
+    clearInterval(this.interval);
+    this.placeNewPiece(this.getRandomPiece());
+    this.setInt();
     document.addEventListener("keydown", this.handleKeyDown.bind(this));
   }
 

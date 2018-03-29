@@ -18,9 +18,7 @@ class App extends React.Component {
       <div className='app-container'>
         <Header />
         <div className='main-container'> 
-          {/* <Piece /> */}
-          <Board gameOver={this.gameOver}
-           />
+          <Board gameOver={this.gameOver} />
         </div>
       </div>
     );
