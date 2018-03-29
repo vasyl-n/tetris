@@ -3,7 +3,13 @@ import Header from './Header.jsx';
 import Piece from './Piece.jsx';
 import Square from './Square.jsx';
 import possiblePieces from '../pieces.js';
-import { movePieceLogic, getNextPieceState, rowShouldDisappear, getNewCoordAfterRotation} from '../helpers.js';
+import { movePieceLogic, 
+  getNextPieceState, 
+  rowShouldDisappear, 
+  getNewCoordAfterRotation, 
+  areCoordBeyondBorderes,
+  otherPiecesBlockingMove
+} from '../helpers.js';
 
 class Board extends React.Component {
   constructor(props) {
@@ -68,14 +74,16 @@ handleKeyDown (event) {
     var coord = this.state.currentPieceCoordinates;
     console.log(coord, this.state.pieceInd, this.state.currentPieceState)
     var newCoord = getNewCoordAfterRotation(coord, this.state.pieceInd, this.state.currentPieceState)
-    this.setState((state, props) => {
-      // console.log(stat)
-      return { currentPieceState: getNextPieceState(state.currentPieceState) }
-    });
     console.log(newCoord, 'NCCCCCC')
-    this.removeCurrentPieceFromBoard();
-    this.setState({currentPieceCoordinates: newCoord});
-    this.updatePiece();
+    if ( !areCoordBeyondBorderes(newCoord)){
+      this.setState((state, props) => {
+        return { currentPieceState: getNextPieceState(state.currentPieceState) }
+      });
+      this.removeCurrentPieceFromBoard();
+      this.setState({currentPieceCoordinates: newCoord});
+      this.updatePiece();
+    }
+
   }
 
 

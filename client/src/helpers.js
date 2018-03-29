@@ -162,4 +162,24 @@ var getNewCoordAfterRotation = function(coord, ind, state) {
   return newCoord;
 } 
 
-export {getNextPieceState, movePieceLogic, rowShouldDisappear, getNewCoordAfterRotation }
+let areCoordBeyondBorderes = (coord) =>{
+  for ( var i = 0; i < coord.length; i++ ) {
+    if ( coord[i][0] < 0 || coord[i][0] > 19 )return true;
+    if ( coord[i][1] < 0 || coord[i][1] > 9)return true;
+
+  }
+  return false
+}
+ 
+let otherPiecesBlockingMove = (coord, board) => {
+
+}
+
+
+export {getNextPieceState, 
+  movePieceLogic, 
+  rowShouldDisappear, 
+  getNewCoordAfterRotation,
+  areCoordBeyondBorderes,
+  otherPiecesBlockingMove
+}
