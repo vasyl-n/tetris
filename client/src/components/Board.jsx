@@ -8,7 +8,8 @@ import { movePieceLogic,
   rowShouldDisappear, 
   getNewCoordAfterRotation, 
   areCoordBeyondBorderes,
-  otherPiecesBlockingMove
+  otherPiecesBlockingMove,
+  isInCurrCoord
 } from '../helpers.js';
 
 class Board extends React.Component {
@@ -53,6 +54,7 @@ handleKeyDown (event) {
         }
         break;
       case keyCodes.leftArrow:
+      // console.log(otherPiecesBlockingMove())
         if ( this.canMove('left')){
           this.movePiece('left');
         }
@@ -72,10 +74,9 @@ handleKeyDown (event) {
 
   rotate() {
     var coord = this.state.currentPieceCoordinates;
-    console.log(coord, this.state.pieceInd, this.state.currentPieceState)
     var newCoord = getNewCoordAfterRotation(coord, this.state.pieceInd, this.state.currentPieceState)
-    console.log(newCoord, 'NCCCCCC')
-    if ( !areCoordBeyondBorderes(newCoord)){
+    // console.log(otherPiecesBlockingMove(newCoord, this.state.board, this.state.currentPieceCoordinates), 'other pieces f')
+    if ( !areCoordBeyondBorderes(newCoord) && !otherPiecesBlockingMove(newCoord, this.state.board, this.state.currentPieceCoordinates) ){
       this.setState((state, props) => {
         return { currentPieceState: getNextPieceState(state.currentPieceState) }
       });
@@ -122,24 +123,16 @@ handleKeyDown (event) {
 
   movePiece(where) {
     var newCoord = movePieceLogic(this.state.currentPieceCoordinates, where);
-    this.removeCurrentPieceFromBoard()
-    this.setState({currentPieceCoordinates: newCoord})
-    this.updatePiece()
+    if (!otherPiecesBlockingMove(newCoord, this.state.board, this.state.currentPieceCoordinates) ) {
+      this.removeCurrentPieceFromBoard()
+      this.setState({currentPieceCoordinates: newCoord})
+      this.updatePiece()
+    }
+
   };
 
 
-  isInCurrCoord(arr){
-    var currPieceCoord = this.state.currentPieceCoordinates;
-    var res = false;
-    for ( var i = 0; i < currPieceCoord.length; i++){
-      if ( currPieceCoord[i][0] === arr[0] &&
-        currPieceCoord[i][1] === arr[1] ) {
-          res === true;
-          return true;
-        }
-    }
-    return res;
-  }
+
 
   isPieceDown() {
     var result = false;
@@ -149,7 +142,7 @@ handleKeyDown (event) {
       var col = this.state.currentPieceCoordinates[i][1];
       var squareCoordInNextRow = [this.state.currentPieceCoordinates[i][0] + 1, this.state.currentPieceCoordinates[i][1] ]
       if ( this.state.currentPieceCoordinates[i][0] === 19 ||
-        (this.state.board[row + 1][col] === 1 && (!this.isInCurrCoord(squareCoordInNextRow) ) )
+        (this.state.board[row + 1][col] === 1 && (!isInCurrCoord(squareCoordInNextRow, this.state.currentPieceCoordinates) ) )
       ) {
         result = true;
         break;
@@ -224,7 +217,7 @@ handleKeyDown (event) {
       for( var i = 0; i < this.state.currentPieceCoordinates.length; i++) {
         if ( this.state.currentPieceCoordinates[i][1] === 9 || 
           ( this.state.board[this.state.currentPieceCoordinates[i][1] + 1] === 1 && 
-            !this.isInCurrCoord([ this.state.currentPieceCoordinates[i][1], this.state.currentPieceCoordinates[i][1]+1]) ) ) {
+            !isInCurrCoord([ this.state.currentPieceCoordinates[i][1], this.state.currentPieceCoordinates[i][1]+1], this.state.currentPieceCoordinates) ) ) {
           result = false;
           break;
         }

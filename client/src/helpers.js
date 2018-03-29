@@ -171,15 +171,36 @@ let areCoordBeyondBorderes = (coord) =>{
   return false
 }
  
-let otherPiecesBlockingMove = (coord, board) => {
-
+let otherPiecesBlockingMove = (coord, board, oldCoord) => {
+  var res = false;
+  // console.log(coord, oldCoord)
+  for ( var i = 0; i < coord.length; i++){
+console.log(coord[i])
+    console.log(isInCurrCoord(coord[i], oldCoord ) )
+    if ( board[coord[i][0]][coord[i][1]] === 1 && !isInCurrCoord( coord[i], oldCoord ) ) {
+        return true;
+      }
+  }
+  return res;
 }
 
+let isInCurrCoord = (arr, currPieceCoord) => {
+  var res = false;
+  for ( var i = 0; i < currPieceCoord.length; i++){
+    if ( currPieceCoord[i][0] === arr[0] &&
+      currPieceCoord[i][1] === arr[1] ) {
+        res = true;
+        return true;
+      }
+  }
+  return res;
+}
 
 export {getNextPieceState, 
   movePieceLogic, 
   rowShouldDisappear, 
   getNewCoordAfterRotation,
   areCoordBeyondBorderes,
-  otherPiecesBlockingMove
+  otherPiecesBlockingMove,
+  isInCurrCoord
 }
