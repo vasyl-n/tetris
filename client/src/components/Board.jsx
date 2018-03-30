@@ -74,6 +74,7 @@ handleKeyDown(event) {
   };
 
   rotate() {
+    // console.log(this.state)
     var coord = this.state.currentPieceCoordinates;
     var newCoord = getNewCoordAfterRotation(coord, this.state.pieceInd, this.state.currentPieceState)
     if ( !areCoordBeyondBorderes(newCoord) && !otherPiecesBlockingMove(newCoord, this.state.board, this.state.currentPieceCoordinates) ){
@@ -92,7 +93,8 @@ handleKeyDown(event) {
     if ( rowsToClear.length > 0 ) {
       this.clearRows(rowsToClear);
     }
-    this.placeNewPiece(this.getRandomPiece());
+    this.placeNewPiece(this.state.nextPiece)
+    // this.placeNewPiece(this.getRandomPiece());
   }
 
   clearRows(rows) {
@@ -164,7 +166,9 @@ handleKeyDown(event) {
     this.setState({board: board});
   }
 
-  placeNewPiece (arg) {
+  placeNewPiece (arg, ind) {
+    this.setState({piece: arg})
+    this.setState({pieceInd: ind|| this.state.nextPieceInd})
     if( this.isGameOver() ){
       clearInterval(this.interval);
       this.props.gameOver();
@@ -184,6 +188,11 @@ handleKeyDown(event) {
         a++;
       }
     }
+    var ind = Math.floor(Math.random() * Math.floor(possiblePieces.length));
+    var next = possiblePieces[ind]
+    this.setState({ nextPiece: next})
+    this.setState({ nextPieceInd: ind})
+    this.props.handleNextPiece(next);
     this.setState({ board: board });
     this.setState({ currentPieceCoordinates: pieceCoord});
     this.setState({ currentPieceState: 0})
@@ -195,7 +204,6 @@ handleKeyDown(event) {
     this.setState({piece: possiblePieces[ind]});
     this.setState({pieceInd: ind});
     return possiblePieces[ind];
-
   };
 
 
@@ -228,8 +236,16 @@ handleKeyDown(event) {
 
   gameStart() {
     clearInterval(this.interval);
-    this.placeNewPiece(this.getRandomPiece());
+    var ind = Math.floor(Math.random() * Math.floor(possiblePieces.length));
+    this.setState({nextPiece: possiblePieces[ind]});
+    this.placeNewPiece(possiblePieces[ind], ind);
     this.setInt();
+
+    //set next piece
+    // var ind = Math.floor(Math.random() * Math.floor(possiblePieces.length));
+    // this.setState({nextPiece: possiblePieces[ind]});
+    // this.setState({nextPieceInd: ind});
+
     document.addEventListener("keydown", this.handleKeyDown );
   }
 

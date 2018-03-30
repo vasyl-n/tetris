@@ -9,13 +9,17 @@ import ReactDOM from 'react-dom';
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      // nextPiece: null
+    };
   }
 
   gameOver() {
     console.log('gameOver');
-    // var node =  ReactDOM.findDOMNode(Board);
-    // ReactDOM.unmountComponentAtNode(node);
+  }
+
+  changeNextPiece(nextP) {
+    this.setState({nextPiece: nextP});
   }
 
   render() {
@@ -24,8 +28,8 @@ class App extends React.Component {
         <Header />
         <div className='main-container'> 
           <Left />
-          <Board gameOver={this.gameOver} />
-          <Right />
+          <Board gameOver={this.gameOver} handleNextPiece={this.changeNextPiece.bind(this)} />
+          <Right np={this.state.nextPiece} />
         </div>
       </div>
     );
