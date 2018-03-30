@@ -1,4 +1,5 @@
 import React from 'react';
+import Audio from './Audio.jsx'
 
 class Left extends React.Component {
   constructor(props) {
@@ -6,11 +7,11 @@ class Left extends React.Component {
     this.state = {}
   }
 
-
   render() {
 
     return (
       <div className="left">
+        <Audio />
       </div>
     );
   }

@@ -55,7 +55,6 @@ handleKeyDown (event) {
         }
         break;
       case keyCodes.leftArrow:
-      // console.log(otherPiecesBlockingMove())
         if ( this.canMove('left')){
           this.movePiece('left');
         }
@@ -76,7 +75,6 @@ handleKeyDown (event) {
   rotate() {
     var coord = this.state.currentPieceCoordinates;
     var newCoord = getNewCoordAfterRotation(coord, this.state.pieceInd, this.state.currentPieceState)
-    // console.log(otherPiecesBlockingMove(newCoord, this.state.board, this.state.currentPieceCoordinates), 'other pieces f')
     if ( !areCoordBeyondBorderes(newCoord) && !otherPiecesBlockingMove(newCoord, this.state.board, this.state.currentPieceCoordinates) ){
       this.setState((state, props) => {
         return { currentPieceState: getNextPieceState(state.currentPieceState) }
@@ -85,7 +83,6 @@ handleKeyDown (event) {
       this.setState({currentPieceCoordinates: newCoord});
       this.updatePiece();
     }
-
   }
 
 
@@ -133,8 +130,6 @@ handleKeyDown (event) {
   };
 
 
-
-
   isPieceDown() {
     var result = false;
     var currPieceCoord = this.state.currentPieceCoordinates;
@@ -171,7 +166,6 @@ handleKeyDown (event) {
   placeNewPiece (arg) {
     if( this.isGameOver() ){
       clearInterval(this.interval);
-      document.removeEventListener("keydown", this.handleKeyDown.bind(this));
       this.props.gameOver();
     }
     var pieceCoord = []
@@ -197,7 +191,6 @@ handleKeyDown (event) {
   getRandomPiece() {
     var ind = Math.floor(Math.random() * Math.floor(possiblePieces.length));
     this.setState({piece: possiblePieces[ind]});
-    console.log(ind);
     this.setState({pieceInd: ind});
     return possiblePieces[ind];
 

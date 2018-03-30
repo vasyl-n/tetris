@@ -4,7 +4,7 @@ import Board from './Board.jsx';
 import Piece from './Piece.jsx';
 import Left from './Left.jsx';
 import Right from './Right.jsx';
-
+import ReactDOM from 'react-dom';
 
 class App extends React.Component {
   constructor(props) {
@@ -13,7 +13,9 @@ class App extends React.Component {
   }
 
   gameOver() {
-    console.log('gameOver')
+    console.log('gameOver');
+    var node =  ReactDOM.findDOMNode(Board);
+    ReactDOM.unmountComponentAtNode(node);
   }
 
   render() {
