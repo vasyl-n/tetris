@@ -3,7 +3,7 @@
   grid-template-columns: auto auto auto auto auto auto auto auto auto auto;
   width: 19rem;
   height: 37rem;
-  border: solid 15px;
+  border: solid 15px brown;
 }
 
 .square {
@@ -19,6 +19,6 @@
   font-family: fantasy;
   font-size: 28px;
   text-align: center;
-  padding: 1rem;
+  padding: 0.7rem;
   font-weight: 900;
 }

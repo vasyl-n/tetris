@@ -32,9 +32,10 @@ class Board extends React.Component {
         return arr
       }()
     };
+    this.handleKeyDown = this.handleKeyDown.bind(this)
   };
 
-handleKeyDown (event) {
+handleKeyDown(event) {
     var keyCodes = {
       leftArrow: 37,
       upArrow:38,
@@ -167,6 +168,7 @@ handleKeyDown (event) {
     if( this.isGameOver() ){
       clearInterval(this.interval);
       this.props.gameOver();
+      document.removeEventListener("keydown", this.handleKeyDown);
     }
     var pieceCoord = []
     var board = this.state.board.slice();
@@ -228,7 +230,7 @@ handleKeyDown (event) {
     clearInterval(this.interval);
     this.placeNewPiece(this.getRandomPiece());
     this.setInt();
-    document.addEventListener("keydown", this.handleKeyDown.bind(this));
+    document.addEventListener("keydown", this.handleKeyDown );
   }
 
   isGameOver() {
@@ -241,7 +243,7 @@ handleKeyDown (event) {
   };
 
   componentWillUnmount() {
-    document.removeEventListener("keydown", this.handleKeyDown.bind(this));
+    document.removeEventListener("keydown", this.handleKeyDown );
   };
 
   render() {

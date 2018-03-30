@@ -14,8 +14,8 @@ class App extends React.Component {
 
   gameOver() {
     console.log('gameOver');
-    var node =  ReactDOM.findDOMNode(Board);
-    ReactDOM.unmountComponentAtNode(node);
+    // var node =  ReactDOM.findDOMNode(Board);
+    // ReactDOM.unmountComponentAtNode(node);
   }
 
   render() {

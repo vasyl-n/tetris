@@ -23,9 +23,7 @@ var movePieceLogic = (arr, where) => {
 
 let rowShouldDisappear = (board) => {
   var arr = [];
-  console.log(board)
   board.forEach((el, ind) => {
-    console.log(el)
     if (el.reduce((acc, cell) => {
       if ( acc === false ) return false;
       return cell === 1;
