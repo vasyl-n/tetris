@@ -27,9 +27,8 @@ let rowShouldDisappear = (board) => {
     if (el.reduce((acc, cell) => {
       if ( acc === false ) return false;
       return cell === 1;
-    }) ) {
+    }, false)) 
       arr.push( ind );
-    }
   })
   return arr;
 }
@@ -69,7 +68,6 @@ var getNewCoordAfterRotation = function(coord, ind, state) {
     }
   }
   if( ind === 0 ) {
-    console.log(state)
     if ( state === 0){
       newCoord.push([coord[0][0],    coord[0][1]]);
       newCoord.push([coord[1][0],    coord[1][1]+1]);
@@ -95,7 +93,6 @@ var getNewCoordAfterRotation = function(coord, ind, state) {
     }
   }
   if( ind === 1 ) {
-    console.log(state)
     if ( state === 0){
       newCoord.push([coord[0][0]-1,    coord[0][1]]);
       newCoord.push([coord[1][0]-1,    coord[1][1]]);
@@ -121,7 +118,6 @@ var getNewCoordAfterRotation = function(coord, ind, state) {
     }
   }
   if( ind === 2 ) {
-    console.log(state)
     if ( state === 0){
       newCoord.push([coord[0][0]-1,    coord[0][1]+1]);
       newCoord.push([coord[1][0],    coord[1][1]]);
@@ -173,10 +169,7 @@ let areCoordBeyondBorderes = (coord) =>{
  
 let otherPiecesBlockingMove = (coord, board, oldCoord) => {
   var res = false;
-  // console.log(coord, oldCoord)
   for ( var i = 0; i < coord.length; i++){
-console.log(coord[i])
-    console.log(isInCurrCoord(coord[i], oldCoord ) )
     if ( board[coord[i][0]][coord[i][1]] === 1 && !isInCurrCoord( coord[i], oldCoord ) ) {
         return true;
       }
