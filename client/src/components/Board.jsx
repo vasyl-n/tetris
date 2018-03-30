@@ -240,12 +240,6 @@ handleKeyDown(event) {
     this.setState({nextPiece: possiblePieces[ind]});
     this.placeNewPiece(possiblePieces[ind], ind);
     this.setInt();
-
-    //set next piece
-    // var ind = Math.floor(Math.random() * Math.floor(possiblePieces.length));
-    // this.setState({nextPiece: possiblePieces[ind]});
-    // this.setState({nextPieceInd: ind});
-
     document.addEventListener("keydown", this.handleKeyDown );
   }
 

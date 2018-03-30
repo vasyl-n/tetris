@@ -5,9 +5,11 @@ const NextPiece = (props) => {
   console.log(props)
   return (
     <div className="next-piece">
-      { props.np !== undefined && props.np.map((el, ind) => {
-          console.log(el)
-        }) 
+      { props.np !== undefined && 
+          props.np.map((el, ind) => 
+            (ind === 1 || ind === 0 )&& el.split('').map((i, b) => <Square s={Number(i)} key={b} isNext={true}/>
+            ) 
+          )
       }
     </div>
   )
