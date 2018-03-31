@@ -1,0 +1,10 @@
+.scores div {
+  display: flex;
+  justify-content: space-between;
+}
+
+.scores {
+  padding-top: 30%;
+  font-family: 'Chicle', cursive;
+  font-size: xx-large;
+}
