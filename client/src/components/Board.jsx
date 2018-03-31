@@ -1,6 +1,5 @@
 import React from 'react';
 import Header from './Header.jsx';
-import Piece from './Piece.jsx';
 import Square from './Square.jsx';
 import possiblePieces from '../pieces.js';
 import { movePieceLogic, 
@@ -94,7 +93,7 @@ handleKeyDown(event) {
       this.clearRows(rowsToClear);
     }
     this.placeNewPiece(this.state.nextPiece)
-    // this.placeNewPiece(this.getRandomPiece());
+    this.props.scoreHandler( rowsToClear.length );
   }
 
   clearRows(rows) {
@@ -119,7 +118,7 @@ handleKeyDown(event) {
       } else if ( that.canMove('down') && !that.isPieceDown()) {
         that.movePiece('down');
       }
-    }, 1000)
+    }, 500)
   }
 
   movePiece(where) {

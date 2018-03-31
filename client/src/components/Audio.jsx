@@ -18,7 +18,7 @@ class Audio extends React.Component {
   render() {
     return (
       <div>
-            <audio autoPlay loop id="myAudio">
+            <audio loop id="myAudio">
                 <source src="./tetris.mp3" type="audio/mpeg"/>
             </audio>
         <div className="audioControl" onClick={this.clickHandler} >pause!</div>

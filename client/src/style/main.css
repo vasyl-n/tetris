@@ -32,8 +32,10 @@
 
 .left {
  margin: 2rem;
+ flex: 1;
 }
 
 .right {
+  flex: 1;
   margin: 2rem;
  }

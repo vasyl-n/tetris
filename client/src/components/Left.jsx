@@ -1,5 +1,7 @@
 import React from 'react';
 import Audio from './Audio.jsx'
+import NextPiece from './NextPiece.jsx'
+import Score from './Score.jsx';
 
 class Left extends React.Component {
   constructor(props) {
@@ -12,6 +14,8 @@ class Left extends React.Component {
     return (
       <div className="left">
         <Audio />
+        
+        
       </div>
     );
   }
