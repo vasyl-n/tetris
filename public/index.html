@@ -8,34 +8,25 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <title>Document</title>
-        <!-- <link rel="stylesheet" type="text/css" href="main.css"> -->
+        <script src="https://www.gstatic.com/firebasejs/4.12.1/firebase.js"></script>
+        <script>
+        // Initialize Firebase
+            var config = {
+                apiKey: "AIzaSyAnUcZQYeOOuGR0BucrgdvB5w3tEinKLZQ",
+                authDomain: "super-tetris-3ddba.firebaseapp.com",
+                databaseURL: "https://super-tetris-3ddba.firebaseio.com",
+                projectId: "super-tetris-3ddba",
+                storageBucket: "",
+                messagingSenderId: "641329862652"
+            };
+            firebase.initializeApp(config);
+        </script>
     </head>
     <body>
         <div id="app"></div>
         <script type="text/javascript" src="bundle.js"></script>
-        <script src="http://localhost:35729/livereload.js"></script>
 
-        <!-- <audio autoplay loop id="yourAudio"> -->
-            <!-- <source src="tetris.mp3" type="audio/mpeg"> -->
-        <!-- </audio> -->
-        <!-- <div id="audioControl">pause!</div> -->
+
+        <script src="http://localhost:35729/livereload.js"></script>
     </body>
-    <!-- <script>
-        var yourAudio = document.getElementById('yourAudio'),
-        ctrl = document.getElementById('audioControl');
-        
-        ctrl.onclick = function () {
-        
-            // Update the Button
-            var play = ctrl.innerHTML === 'play!';
-            ctrl.innerHTML = play ? 'pause!' : 'play!';
-        
-            // Update the Audio
-            var method = play ? 'play' : 'pause';
-            yourAudio[method]();
-        
-            // Prevent Default Action
-            return false;
-        };
-    </script> -->
 </html>

@@ -1,6 +1,6 @@
 import React from 'react';
 import NextPiece from './NextPiece.jsx';
-import Score from './Score.jsx';
+import Stats from './Stats.jsx';
 
 class Right extends React.Component {
   constructor(props) {
@@ -12,7 +12,7 @@ class Right extends React.Component {
     return (
       <div className="right">
          <NextPiece np={this.props.np}  />
-         <Score score={this.props.score} lines={this.props.lines} />
+         <Stats score={this.props.score} lines={this.props.lines} />
       </div>
     );
   }

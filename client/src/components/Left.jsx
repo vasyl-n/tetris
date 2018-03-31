@@ -1,7 +1,8 @@
 import React from 'react';
 import Audio from './Audio.jsx'
 import NextPiece from './NextPiece.jsx'
-import Score from './Score.jsx';
+import Stats from './Stats.jsx';
+import HighScores from './HighScores.jsx';
 import '../style/left.css'
 
 class Left extends React.Component {
@@ -11,12 +12,10 @@ class Left extends React.Component {
   }
 
   render() {
-
     return (
       <div className="left">
         <Audio />
-        
-        
+        <HighScores />
       </div>
     );
   }

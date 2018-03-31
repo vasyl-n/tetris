@@ -24,14 +24,12 @@ class App extends React.Component {
 
   scoreHandler(multiplier) {
     this.setState((prev) => {
-      console.log(multiplier)
       if (multiplier > 0) {
         return {score: prev.score + (300 * multiplier), linesBurned: prev.linesBurned + multiplier}
       }
       return {score: prev.score + 50 }
     })
   }
-
 
   render() {
     return (

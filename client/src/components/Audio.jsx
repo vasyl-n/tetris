@@ -5,15 +5,25 @@ class Audio extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-        playing: false
+      playing: false
+
     }
     this.clickHandler = this.clickHandler.bind(this)
   }
 
   clickHandler() {
-    var audio = document.getElementById("myAudio")
-    this.state.playing ? audio.pause() : audio.play()
+    var audio = this.state.audio;
+    this.state.playing ? audio.pause() : this.play(audio);
     this.setState({ playing : !this.state.playing });
+  }
+
+  play(audio) {
+    document.getElementById("myAudio").volume = 0.5;
+    audio.play();
+  }
+
+  componentDidMount(){
+    this.setState({audio: document.getElementById("myAudio")})
   }
 
   render() {

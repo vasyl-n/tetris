@@ -1,16 +1,17 @@
 import React from 'react';
-import '../style/score.css';
+import '../style/stats.css';
 
-const Score = (props) => {
+const Stats = (props) => {
 
   return(
-    <div className="scores">
+    <div className="stats">
       <div className="score"><span>Score: </span><span>{props.score}</span></div>
       <div className="lines"><span>Lines: </span><span>{props.lines}</span></div>
+      <div className="level"><span>Level: </span><span>1</span></div>
     </div>
 
   )
 
 }
 
-export default Score
+export default Stats;
