@@ -3,22 +3,56 @@ import React from 'react';
 class HighScores extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {scores: {}};
     this.database = firebase.database();
+    this.readData = this.readData.bind(this);
+    this.componentWillMount = this.componentWillMount.bind(this)
   }
 
-  writeUserData(userId, name, score) {
-    firebase.database().ref('scores/' + userId).set({
+  writeData(userId, name, score) {
+    firebase.database().ref('scores/' + 'test').set({
       username: name,
       score: score
     });
   }
 
+  readData(callback){
+    // var userId = firebase.auth().currentUser.uid;
+    return firebase.database().ref('scores/').once('value').then(function(data) {
+      callback(data.val());
+    });
+  }
+
+  componentWillMount() {
+    var that = this
+    this.readData(function(data){
+      that.setState({
+        scores: data
+      })
+    })
+  }
+
   render() {
-    console.log(this.database)
-    this.writeUserData(4, 'Scorpion', 12)
+    var that = this
     return(
-      <div className="hign-scores">scores</div>
+      <div className="hign-scores">
+        <div className="high-scores-title">Hign Scores</div>
+        <div className="hign-scores-body">
+          {
+            Object.keys(that.state.scores).map(function(key, index) {
+              var entry = that.state.scores[key];
+              console.log(entry);
+              return (
+                <div className="hign-scores-entry">
+                  <div className="username">{entry.username}</div>
+                  <div className="score">{entry.score}</div>
+                </div>
+              )
+            })
+          }
+        </div>
+
+      </div>
     )
   }
 }

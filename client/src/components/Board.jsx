@@ -167,14 +167,16 @@ handleKeyDown(event) {
 
   placeNewPiece (arg, ind) {
     this.setState({piece: arg})
-    this.setState({pieceInd: ind|| this.state.nextPieceInd})
+    this.setState({pieceInd: ind || this.state.nextPieceInd})
     if( this.isGameOver() ){
       clearInterval(this.interval);
       this.props.gameOver();
       document.removeEventListener("keydown", this.handleKeyDown);
     }
     var pieceCoord = []
+    
     var board = this.state.board.slice();
+    // console.log(board)
     var p = arg || this.state.piece
     for( var i = 0; i < 2; i++ ) {
       var a = 3;
