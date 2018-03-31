@@ -35,23 +35,22 @@ class HighScores extends React.Component {
   render() {
     var that = this
     return(
-      <div className="hign-scores">
-        <div className="high-scores-title">Hign Scores</div>
-        <div className="hign-scores-body">
-          {
-            Object.keys(that.state.scores).map(function(key, index) {
-              var entry = that.state.scores[key];
-              console.log(entry);
-              return (
-                <div className="hign-scores-entry">
-                  <div className="username">{entry.username}</div>
-                  <div className="score">{entry.score}</div>
-                </div>
-              )
-            })
-          }
-        </div>
-
+      <div className="high-scores">
+        <div className="high-scores-title">High Scores</div>
+          <div className="high-scores-body">
+            {
+              Object.keys(that.state.scores).map(function(key, index) {
+                var entry = that.state.scores[key];
+                console.log(entry);
+                return (
+                  <div className="high-scores-entry" key={index}>
+                    <div className="username">{entry.username}</div>
+                    <div className="score">{entry.score}</div>
+                  </div>
+                )
+              })
+            }
+          </div>
       </div>
     )
   }

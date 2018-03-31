@@ -6,4 +6,27 @@
 
 .left {
   flex: 1;
+  max-width: 249px;
+  padding: 5%;
  }
+
+.high-scores-body{
+  display: flex;
+  flex-direction: column;
+}
+
+.high-scores-body div {
+  display: flex;
+  justify-content: space-between;
+  max-width: 249px;
+}
+
+.high-scores {
+  font-size: xx-large;
+}
+
+.high-scores-title {
+  text-decoration: underline;
+  margin: 10%;
+  text-align: center;
+}

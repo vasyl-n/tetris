@@ -11,6 +11,7 @@
 }
 
 .main-container {
+  font-family: 'Chicle', cursive;
   display: flex;
   justify-content: center;
 }
@@ -31,5 +32,6 @@
 }
 
 .audioControl {
-  height: 100px;
+  /* height: 90px; */
 }
+

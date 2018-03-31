@@ -28,11 +28,11 @@ class Audio extends React.Component {
   render() {
     return (
       <div>
-            <audio loop id="myAudio">
-                <source src="./tetris.mp3" type="audio/mpeg"/>
-            </audio>
+          <audio loop id="myAudio">
+            <source src="./tetris.mp3" type="audio/mpeg"/>
+          </audio>
         <div className="audioControl" onClick={this.clickHandler} >
-          <img src={this.state.playing ? './audio-enabled.png' : './audio-disabled.png'} alt="" height='50'/>
+          <img src={this.state.playing ? './audio-enabled.png' : './audio-disabled.png'} alt="" height='60'/>
         </div>
       </div>
     );
