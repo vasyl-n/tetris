@@ -1,10 +1,21 @@
+.right {
+  display: flex;
+  flex: 2;
+}
+
+.next-piece-stats {
+  flex: 1;
+  max-width: 249px;
+  padding: 5%;
+}
+
 .stats div {
   display: flex;
   justify-content: space-between;
 }
 
 .stats {
-  padding-top: 30%;
+  padding-top: 20%;
   font-family: 'Chicle', cursive;
   font-size: xx-large;
 }

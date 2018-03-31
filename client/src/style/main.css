@@ -30,12 +30,6 @@
   height: 4rem;
 }
 
-.left {
- margin: 2rem;
- flex: 1;
+.audioControl {
+  height: 100px;
 }
-
-.right {
-  flex: 1;
-  margin: 2rem;
- }

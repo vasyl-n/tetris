@@ -1,5 +1,4 @@
 import React from 'react';
-import '../style/stats.css';
 
 const Stats = (props) => {
 

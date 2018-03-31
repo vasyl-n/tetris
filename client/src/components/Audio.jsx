@@ -1,5 +1,4 @@
 import React from 'react';
-import '../style/audio.css';
 
 class Audio extends React.Component {
   constructor(props) {
