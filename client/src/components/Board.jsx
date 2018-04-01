@@ -73,7 +73,6 @@ handleKeyDown(event) {
   };
 
   rotate() {
-    // console.log(this.state)
     var coord = this.state.currentPieceCoordinates;
     var newCoord = getNewCoordAfterRotation(coord, this.state.pieceInd, this.state.currentPieceState)
     if ( !areCoordBeyondBorderes(newCoord) && !otherPiecesBlockingMove(newCoord, this.state.board, this.state.currentPieceCoordinates) ){
@@ -85,7 +84,6 @@ handleKeyDown(event) {
       this.updatePiece();
     }
   }
-
 
   handlePieceDown() {
     var rowsToClear = rowShouldDisappear(this.state.board);
@@ -128,9 +126,7 @@ handleKeyDown(event) {
       this.setState({currentPieceCoordinates: newCoord})
       this.updatePiece()
     }
-
   };
-
 
   isPieceDown() {
     var result = false;
@@ -173,10 +169,8 @@ handleKeyDown(event) {
       this.props.gameOver();
       document.removeEventListener("keydown", this.handleKeyDown);
     }
-    var pieceCoord = []
-    
+    var pieceCoord = [];
     var board = this.state.board.slice();
-    // console.log(board)
     var p = arg || this.state.piece
     for( var i = 0; i < 2; i++ ) {
       var a = 3;
@@ -244,18 +238,30 @@ handleKeyDown(event) {
     document.addEventListener("keydown", this.handleKeyDown );
   }
 
+
   isGameOver() {
     if( this.state.board[1][3] === 1 || this.state.board[1][4] === 1 || this.state.board[1][5] === 1 ) return true;
     return false;
   }
 
   componentWillMount() {
-    this.gameStart()
+    this.gameStart();
   };
 
   componentWillUnmount() {
     document.removeEventListener("keydown", this.handleKeyDown );
   };
+
+  handlePause() {
+    if(this.state.paused){
+      this.setInt()
+      this.setState({paused: false})
+    } else {
+      clearInterval(this.interval)
+      this.setState({paused: true})
+    }
+
+  }
 
   render() {
     return (

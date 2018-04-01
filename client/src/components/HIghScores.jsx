@@ -9,9 +9,9 @@ class HighScores extends React.Component {
     this.componentWillMount = this.componentWillMount.bind(this)
   }
 
-  writeData(userId, name, score) {
-    firebase.database().ref('scores/' + 'test').set({
-      username: name,
+  writeData(userName, score) {
+    firebase.database().ref('scores/' + userName).set({
+      // username: name,
       score: score
     });
   }
@@ -25,11 +25,12 @@ class HighScores extends React.Component {
 
   componentWillMount() {
     var that = this
-    this.readData(function(data){
-      that.setState({
-        scores: data
-      })
-    })
+    // this.writeData('Scorpion', 5000)
+    // this.readData(function(data){
+    //   that.setState({
+    //     scores: data
+    //   })
+    // })
   }
 
   render() {
@@ -41,10 +42,10 @@ class HighScores extends React.Component {
             {
               Object.keys(that.state.scores).map(function(key, index) {
                 var entry = that.state.scores[key];
-                console.log(entry);
+                console.log(key);
                 return (
                   <div className="high-scores-entry" key={index}>
-                    <div className="username">{entry.username}</div>
+                    <div className="username">{key}</div>
                     <div className="score">{entry.score}</div>
                   </div>
                 )
