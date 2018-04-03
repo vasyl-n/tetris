@@ -1,7 +1,7 @@
 import React from 'react';
 import Header from './Header.jsx';
 import Square from './Square.jsx';
-import possiblePieces from '../pieces.js';
+import possiblePieces from '../piecesModel.js';
 import { movePieceLogic, 
   getNextPieceState, 
   rowShouldDisappear, 
@@ -19,6 +19,8 @@ class Board extends React.Component {
       currentPieceState: 0,
       piece: null,
       pieceInd: null,
+      time: 800,
+      level: this.props.level,
       board: function(){
         var arr = []
         for( var i = 0; i < 20; i++){
@@ -32,6 +34,7 @@ class Board extends React.Component {
       }()
     };
     this.handleKeyDown = this.handleKeyDown.bind(this)
+  
   };
 
 handleKeyDown(event) {
@@ -48,7 +51,7 @@ handleKeyDown(event) {
         if ( this.canMove('down')){
           this.movePiece('down');
           clearInterval(this.interval);
-          this.setInt();
+          this.setInt(this.state.time);
           if ( this.isPieceDown() ) {
             this.handlePieceDown()
           }
@@ -108,15 +111,17 @@ handleKeyDown(event) {
     }
   }
 
-  setInt(){
+  setInt(time){
     var that = this;
+    
     this.interval = setInterval(function() {
+      that.handleLevels() 
       if ( that.isPieceDown() ) {
         that.handlePieceDown()
       } else if ( that.canMove('down') && !that.isPieceDown()) {
         that.movePiece('down');
       }
-    }, 500)
+    }, time)
   }
 
   movePiece(where) {
@@ -234,7 +239,7 @@ handleKeyDown(event) {
     var ind = Math.floor(Math.random() * Math.floor(possiblePieces.length));
     this.setState({nextPiece: possiblePieces[ind]});
     this.placeNewPiece(possiblePieces[ind], ind);
-    this.setInt();
+    this.setInt(this.state.time);
     document.addEventListener("keydown", this.handleKeyDown );
   }
 
@@ -254,13 +259,28 @@ handleKeyDown(event) {
 
   handlePause() {
     if(this.state.paused){
-      this.setInt()
+      this.setInt(this.state.time)
       this.setState({paused: false})
     } else {
       clearInterval(this.interval)
       this.setState({paused: true})
     }
+  }
 
+  removeInterval() {
+    clearInterval(this.interval);
+  }
+
+  handleLevels() {
+    var newLevel = Math.floor(this.props.score/2700) +1
+    if ( this.state.level !== newLevel ) {
+      this.setState({level: newLevel});
+      this.props.updateLevel(newLevel);
+      clearInterval(this.interval);
+      var newTime = Math.floor(this.state.time - (this.state.time / 10))
+      this.setState({time: newTime})
+      this.setInt(newTime)
+    }
   }
 
   render() {

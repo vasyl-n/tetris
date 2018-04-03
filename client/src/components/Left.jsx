@@ -18,7 +18,7 @@ class Left extends React.Component {
         <div className="top-bar">
           <Audio />
         </div>
-        <HighScores />
+        <HighScores username={this.props.username} />
       </div>
     );
   }

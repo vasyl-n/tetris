@@ -10,12 +10,6 @@ class App extends React.Component {
     super(props);
     this.state = {
     };
-    this.gameOver = this.gameOver.bind(this)
-  }
-
-  gameOver() {
-    console.log('gameOver');
-    this.refs.child.pauseHandler()
   }
 
 
@@ -24,7 +18,7 @@ class App extends React.Component {
       <div className='app-container'>
         <Header />
         <div className='main-container'> 
-          <Left />  
+          <Left username={this.username} />  
           <Right gameOver={this.gameOver} />
         </div>
       </div>
