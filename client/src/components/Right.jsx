@@ -10,6 +10,7 @@ class Right extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      isGameOver: false,
       linesBurned: 0,
       score: 0,
       paused: false,
@@ -47,6 +48,7 @@ class Right extends React.Component {
   }
 
   gameOver() {
+    this.setState({isGameOver: true})
     let username = prompt('What is your name?')
     if (username !== null && username !== undefined ) {
       writeData(username, this.state.score)
@@ -72,7 +74,7 @@ class Right extends React.Component {
         <div className="next-piece-stats">
           <NextPiece np={this.state.nextPiece}  />
           <Stats score={this.state.score} lines={this.state.linesBurned} level={this.state.level} />
-          <Pause pauseSwitch={this.pauseSwitch} onClick={this.pauseHandler} paused={this.state.paused} />
+          <Pause pauseSwitch={this.pauseSwitch} onClick={this.pauseHandler} paused={this.state.paused} isGameOver={this.state.isGameOver} />
         </div>
         
       </div>

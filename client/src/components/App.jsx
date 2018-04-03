@@ -19,7 +19,7 @@ class App extends React.Component {
         <Header />
         <div className='main-container'> 
           <Left username={this.username} />  
-          <Right gameOver={this.gameOver} />
+          <Right />
         </div>
       </div>
     );

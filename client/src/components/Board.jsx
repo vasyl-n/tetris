@@ -272,7 +272,7 @@ handleKeyDown(event) {
   }
 
   handleLevels() {
-    var newLevel = Math.floor(this.props.score/2700) +1
+    var newLevel = Math.floor(this.props.score/2200) +1
     if ( this.state.level !== newLevel ) {
       this.setState({level: newLevel});
       this.props.updateLevel(newLevel);
