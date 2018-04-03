@@ -18,3 +18,9 @@
   padding-top: 20%;
   font-size: xx-large;
 }
+
+.pause {
+  font-size: xx-large;
+  text-decoration: underline;
+  text-align: center;
+}

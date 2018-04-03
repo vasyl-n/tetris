@@ -37,6 +37,7 @@ class Right extends React.Component {
 
   pauseHandler() {
     this.refs.child.handlePause()
+    this.pauseSwitch()
   }
 
   pauseSwitch() {
@@ -68,12 +69,12 @@ class Right extends React.Component {
             scoreHandler={this.scoreHandler.bind(this) }
             updateLevel={this.updateLevel}
             paused={this.state.paused} />
-            
         <div className="next-piece-stats">
           <NextPiece np={this.state.nextPiece}  />
           <Stats score={this.state.score} lines={this.state.linesBurned} level={this.state.level} />
+          <Pause pauseSwitch={this.pauseSwitch} onClick={this.pauseHandler} paused={this.state.paused} />
         </div>
-        <Pause pauseSwitch={this.pauseSwitch} onClick={this.pauseHandler} />
+        
       </div>
     );
   }
