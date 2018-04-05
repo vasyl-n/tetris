@@ -9,7 +9,7 @@
   },
   "scripts": {
     "start": "node server/index.js",
-    "start-dev": "webpack -d --watch & nodemon server/index.js",
+    "start-dev": "webpack -d -w --watch & nodemon server/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
