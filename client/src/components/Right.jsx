@@ -14,12 +14,25 @@ class Right extends React.Component {
       linesBurned: 0,
       score: 0,
       paused: false,
-      level: 1
+      level: 1,
+      boardKey: 1
     }
     this.pauseHandler = this.pauseHandler.bind(this);
     this.pauseSwitch = this.pauseSwitch.bind(this);
     this.gameOver = this.gameOver.bind(this);
     this.updateLevel = this.updateLevel.bind(this);
+    this.resetGame = this.resetGame.bind(this);
+  }
+
+  resetGame() {
+    this.setState({
+      isGameOver: false,
+      linesBurned: 0,
+      score: 0,
+      paused: false,
+      level: 1,
+      boardKey: this.state.boardKey + 1,
+    })
   }
 
   changeNextPiece(np) {
@@ -49,9 +62,14 @@ class Right extends React.Component {
 
   gameOver() {
     this.setState({isGameOver: true})
-    let username = prompt('What is your name?')
-    if (username !== null && username !== undefined ) {
+    let username = prompt('Please enter your name?')
+    if (username !== null && username !== undefined && username !== '' ) {
       writeData(username, this.state.score)
+    }
+    let playAgain = confirm("Play again?");
+    if (playAgain) {
+      this.setState({shouldClearBoard: true})
+      this.resetGame()
     }
   }
 
@@ -63,14 +81,16 @@ class Right extends React.Component {
     return (
       <div className="right">
         <Board 
-            ref="child"
-            level={this.state.level}
-            score={this.state.score}
-            gameOver={this.gameOver}
-            handleNextPiece={this.changeNextPiece.bind(this)}
-            scoreHandler={this.scoreHandler.bind(this) }
-            updateLevel={this.updateLevel}
-            paused={this.state.paused} />
+          key={this.state.boardKey}
+          ref="child"
+          level={this.state.level}
+          score={this.state.score}
+          gameOver={this.gameOver}
+          handleNextPiece={this.changeNextPiece.bind(this)}
+          scoreHandler={this.scoreHandler.bind(this) }
+          updateLevel={this.updateLevel}
+          paused={this.state.paused} 
+        />
         <div className="next-piece-stats">
           <NextPiece np={this.state.nextPiece}  />
           <Stats score={this.state.score} lines={this.state.linesBurned} level={this.state.level} />

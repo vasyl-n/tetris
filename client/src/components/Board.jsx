@@ -34,7 +34,6 @@ class Board extends React.Component {
       }()
     };
     this.handleKeyDown = this.handleKeyDown.bind(this)
-  
   };
 
 handleKeyDown(event) {
@@ -277,7 +276,7 @@ handleKeyDown(event) {
     return false;
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.gameStart();
   };
 
