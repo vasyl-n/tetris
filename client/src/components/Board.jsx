@@ -86,7 +86,7 @@ handleKeyDown(event) {
       this.setState({currentPieceCoordinates: newCoord});
       this.updatePiece();
     }
-  }
+  } 
 
   handlePieceDown() {
     var rowsToClear = rowShouldDisappear(this.state.board);
@@ -177,7 +177,9 @@ handleKeyDown(event) {
     var pieceCoord = [];
     var board = this.state.board.slice();
     var p = arg || this.state.piece
-    for( var i = 0; i < 2; i++ ) {
+    let iMax = 2;
+    if (this.state.pieceInd === 4) iMax = 1; 
+    for( var i = 0; i < iMax; i++ ) {
       var a = 3;
       this.setState({piece: p})
       for ( var j = 0; j < 4; j++ ) {
@@ -245,7 +247,33 @@ handleKeyDown(event) {
 
 
   isGameOver() {
-    if( this.state.board[1][3] === 1 || this.state.board[1][4] === 1 || this.state.board[1][5] === 1 ) return true;
+    if (this.state.pieceInd === 0) {
+      if(this.state.board[1][4] === 1 || this.state.board[1][5] === 1 || this.state.board[1][6] === 1 ) return true;
+    }
+    if (this.state.pieceInd === 1) {
+      if(this.state.board[0][4] === 1 || this.state.board[1][4] === 1 || this.state.board[1][5] === 1 || this.state.board[1][6] === 1 ) return true;
+    }
+
+    if (this.state.pieceInd === 2) {
+      if(this.state.board[0][4] === 1 || this.state.board[0][5] === 1 || this.state.board[0][6] === 1 || this.state.board[1][6] === 1 ) return true;
+    }
+
+    if (this.state.pieceInd === 3) {
+      if(this.state.board[0][3] === 1 || this.state.board[0][4] === 1 || this.state.board[1][4] === 1 || this.state.board[1][5] === 1 ) return true;
+    }
+
+    if (this.state.pieceInd === 5) {
+      if(this.state.board[0][5] === 1 || this.state.board[0][4] === 1 || this.state.board[1][4] === 1 || this.state.board[1][5] === 1 ) return true;
+    }
+
+    if (this.state.pieceInd === 6) {
+      if(this.state.board[0][5] === 1 || this.state.board[0][6] === 1 || this.state.board[1][4] === 1 || this.state.board[1][5] === 1 ) return true;
+    }
+
+    if (this.state.pieceInd === 4) {
+      if( this.state.board[0][3] === 1 || this.state.board[0][4] === 1 || this.state.board[0][5] === 1 || this.state.board[0][6] === 1 ) return true;
+    }
+
     return false;
   }
 
