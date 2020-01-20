@@ -33,6 +33,7 @@ class Right extends React.Component {
       level: 1,
       boardKey: this.state.boardKey + 1,
     })
+    this.props.updateKey();
   }
 
   changeNextPiece(np) {
