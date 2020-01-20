@@ -8,18 +8,9 @@ class Square extends React.Component {
 
 
   render() {
-    var activeStyle = {
-      backgroundColor:'black'
-    };
-    var inActiveStyle = {
-      backgroundColor:'lightblue'
-    };
-    var nextStyle = {
-      backgroundColor:'transparent'
-    }
-
     return (
-      <div className="square" style={this.props.s === 1 ? activeStyle : this.props.isNext? nextStyle : inActiveStyle}>
+      <div className={`square ${this.props.s === 1 ? "active-style" : this.props.isNext ? "next-style" : "inactive-style"}`}>
+        <div className="triangle"></div>
       </div>
     );
   }

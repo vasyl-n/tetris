@@ -1,12 +1,16 @@
 .right {
   display: flex;
-  flex: 2;
 }
 
 .next-piece-stats {
   flex: 1;
-  max-width: 249px;
-  padding: 5%;
+  max-width: 272px;
+  padding: 40px;
+  width: 245px;
+}
+
+.next-piece-stats .triangle {
+  display: none;
 }
 
 .stats div {
@@ -23,4 +27,8 @@
   font-size: xx-large;
   text-decoration: underline;
   text-align: center;
+}
+
+.pause:hover {
+  cursor: pointer;
 }

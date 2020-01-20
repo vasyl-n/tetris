@@ -1,29 +1,91 @@
+body {
+  margin:0;
+  height: 100vh;
+}
+
+#app {
+  margin:0;
+  height: 100vh;
+  background-image: url('/background.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
 .board {
   display: inline-grid;
   grid-template-columns: auto auto auto auto auto auto auto auto auto auto;
   width: 19rem;
   height: 37rem;
-  border: solid 15px brown;
+  border: solid 15px transparent;
+  background-size: cover;
+  background-repeat: no-repeat;
+
+  background-image: linear-gradient(to bottom right, transparent, red, transparent, yellow, transparent);
+  background-image: radial-gradient(transparent, red, transparent, yellow, transparent, green, transparent, red);
 }
 
 .square {
-  margin: 1px;
+  position: relative;
+}
+
+.square .triangle {
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 8px 8px 0 0;
+  border-color: white transparent transparent transparent;
+  margin-top: 2px;
+  margin-left: 2px;
+}
+
+.active-style {
+  background-color: black;
+  border: 2px solid white;
+  border-radius: 5px;
+}
+
+/* .inactive-style {
+  background-color: white;
+} */
+
+.inactive-style .triangle {
+  display: none;
+}
+
+.inactive-style:nth-child(odd) {
+  background-color: transparent;
+  border: 2px solid transparent;
+}
+.inactive-style:nth-child(even) {
+  background-color: transparent;
+  border: 2px solid transparent;
+}
+
+.next-style {
+  background-color: transparent;
 }
 
 .main-container {
-  font-family: 'Chicle', cursive;
+  /* font-family: 'Chicle', cursive; */
+  font-family: serif;
   display: flex;
   justify-content: center;
   max-width: 1066px;
   margin: 0 auto;
+  color: gold;
+  border: 2px solid;
+  border-radius: 10px;
 }
 
 .header {
-  font-family: 'Chicle', cursive;
+  /* font-family: 'Chicle', cursive; */
+  font-family: serif;
   font-size: 35px;
   text-align: center;
   padding: 0.7rem;
   font-weight: 900;
+  color: gold;
 }
 
 .next-piece {
@@ -33,3 +95,6 @@
   height: 4rem;
 }
 
+.audioControl img:hover {
+  cursor: pointer;
+}

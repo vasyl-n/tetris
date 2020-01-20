@@ -5,9 +5,8 @@
 }
 
 .left {
-  flex: 1;
-  max-width: 249px;
-  padding: 4%;
+  width: 245px;
+  padding: 40px;
  }
 
 .high-scores-body{
