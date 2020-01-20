@@ -177,7 +177,6 @@ handleKeyDown(event) {
     var board = this.state.board.slice();
     var p = arg || this.state.piece
     let iMax = 2;
-    if (this.state.pieceInd === 4) iMax = 1; 
     for( var i = 0; i < iMax; i++ ) {
       var a = 3;
       this.setState({piece: p})
