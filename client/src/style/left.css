@@ -7,6 +7,7 @@
 .left {
   width: 245px;
   padding: 40px;
+  z-index: 2;
  }
 
 .high-scores-body{

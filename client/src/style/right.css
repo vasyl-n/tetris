@@ -1,5 +1,6 @@
 .right {
   display: flex;
+  z-index: 2;
 }
 
 .next-piece-stats {
