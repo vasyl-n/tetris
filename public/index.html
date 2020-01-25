@@ -9,6 +9,7 @@
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <title>Document</title>
         <script src="https://www.gstatic.com/firebasejs/4.12.1/firebase.js"></script>
+        <script src="/parallax.js"></script>
         <script>
         // Initialize Firebase
             var config = {
@@ -23,10 +24,15 @@
         </script>
     </head>
     <body>
-        <div id="app"></div>
+        <div id="scene">
+            <div id="app">
+            </div>
+        </div id="scene">
         <script type="text/javascript" src="bundle.js"></script>
-
-
         <script src="http://localhost:35729/livereload.js"></script>
+        <script>
+                var scene1 = document.getElementById('board-wrapper');
+                var parallaxInstance1 = new Parallax(scene1);
+        </script>
     </body>
 </html>

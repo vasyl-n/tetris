@@ -3,19 +3,29 @@ body {
   height: 100vh;
 }
 
-#app {
+/* #app { */
+  /* margin:0; */
+  /* height: 100vh; */
+  /* display: none; */
+  /* background-image: url('/background.jpg'); */
+  /* background-size: cover; */
+  /* background-repeat: no-repeat; */
+/* } */
+
+#scene {
   margin:0;
   height: 100vh;
   background-image: url('/background.jpg');
   background-size: cover;
   background-repeat: no-repeat;
+  overflow: hidden;
 }
 
 .app-container {
   z-index: 2;
 }
 
-#app::after {
+#scene::after {
 	content: ''; 
 	width: 100%; 
 	height: 100%; 

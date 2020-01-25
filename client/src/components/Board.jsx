@@ -2,6 +2,7 @@ import React from 'react';
 import Header from './Header.jsx';
 import Square from './Square.jsx';
 import possiblePieces from '../piecesModel.js';
+// import Parallax from 'parallax-js'
 import { movePieceLogic, 
   getNextPieceState, 
   rowShouldDisappear, 
@@ -36,7 +37,7 @@ class Board extends React.Component {
     this.handleKeyDown = this.handleKeyDown.bind(this)
   };
 
-handleKeyDown(event) {
+  handleKeyDown(event) {
     var keyCodes = {
       leftArrow: 37,
       upArrow:38,
@@ -311,8 +312,12 @@ handleKeyDown(event) {
 
   render() {
     return (
-      <div className='board'>
-        {this.state.board.map((el, ind) => el.map((i, b) => <Square s={i} key={b}/>))}
+      <div id="board-wrapper">
+        <div data-depth="0.15">
+          <div className='board' >
+            {this.state.board.map((el, ind) => el.map((i, b) => <Square s={i} key={b}/>))}
+          </div>
+        </div>
       </div>
     );
   }
