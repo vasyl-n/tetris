@@ -313,7 +313,7 @@ class Board extends React.Component {
   render() {
     return (
       <div id="board-wrapper">
-        <div data-depth="0.15">
+        <div data-depth="0.1">
           <div className='board' >
             {this.state.board.map((el, ind) => el.map((i, b) => <Square s={i} key={b}/>))}
           </div>
